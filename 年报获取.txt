@@ -1,0 +1,49 @@
+sina:(best so far for hk)
+http://stock.finance.sina.com.cn/hkstock/finance/00700.html
+http://quotes.sina.com.cn/usstock/hq/balance.php?s=AAPL
+
+
+
+
+msn:
+https://www.msn.com/en-us/money/stockdetails/financials/fi-126.1.AAPL.NAS
+
+yahoo:
+https://finance.yahoo.com/quote/AAPL/financials?p=AAPL
+https://finance.yahoo.com/quote/0700.HK/financials?p=0700.HK&.tsrc=fin-srch
+https://finance.yahoo.com/quote/TME/financials?p=TME&.tsrc=fin-srch
+
+get report from yahoo:??
+https://query1.finance.yahoo.com/v7/finance/quote?formatted=true&crumb=qzKRwVIK1az&lang=en-US&region=US&symbols=TME&fields=messageBoardId%2ClongName%2CshortName%2CmarketCap%2CunderlyingSymbol%2CunderlyingExchangeSymbol%2CheadSymbolAsString%2CregularMarketPrice%2CregularMarketChange%2CregularMarketChangePercent%2CregularMarketVolume%2Cuuid%2CregularMarketOpen%2CfiftyTwoWeekLow%2CfiftyTwoWeekHigh&corsDomain=finance.yahoo.com
+get last price from yahoo
+https://query2.finance.yahoo.com/v7/finance/quote?formatted=true&crumb=qzKRwVIK1az&lang=en-US&region=US&symbols=GOOG%2CFB%2CAMZN%2CNFLX%2CTSLA&fields=longName%2CshortName%2CregularMarketPrice%2CregularMarketChange%2CregularMarketChangePercent%2CmessageBoardId%2CmarketCap%2CunderlyingSymbol%2CunderlyingExchangeSymbol%2CheadSymbolAsString%2CregularMarketVolume%2Cuuid%2CregularMarketOpen%2CfiftyTwoWeekLow%2CfiftyTwoWeekHigh&corsDomain=finance.yahoo.com
+
+get historical data from yahoo:
+https://query2.finance.yahoo.com/v8/finance/chart/AAPL?formatted=true&crumb=qzKRwVIK1az&lang=en-US&region=US&period1=1392739200&period2=1550505600&interval=1mo&events=div%7Csplit&corsDomain=finance.yahoo.com
+
+CIK MAP:
+http://rankandfiled.com/#/data/tickers
+
+http://rankandfiled.com/data/identifiers?start=0
+http://rankandfiled.com/data/identifiers?start=100
+http://rankandfiled.com/data/identifiers?start=200
+...
+
+https://www.researchgate.net/publication/224316943_Multi-threaded_data_mining_of_EDGAR_CIKs_Central_Index_Keys_from_ticker_symbols
+
+report search:
+https://www.sec.gov/edgar/searchedgar/companysearch.html
+
+
+report page partten:
+https://www.sec.gov/cgi-bin/browse-edgar?action=getcompany&CIK=${cik}&owner=exclude&count=100&hidefilings=0
+
+apple 10-k:
+https://www.sec.gov/Archives/edgar/data/320193/000032019318000145/0000320193-18-000145-index.htm
+https://www.sec.gov/Archives/edgar/data/320193/000032019317000070/0000320193-17-000070-index.htm
+
+https://www.sec.gov/Archives/edgar/data/320193/000032019318000145/a10-k20189292018.htm
+
+8Q:财报, 10-k:年报
+
+research target: FB,BRKB,MCS,MSFT,pfe,,jnj,AMGN,
