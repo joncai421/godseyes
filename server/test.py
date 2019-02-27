@@ -18,8 +18,8 @@
 
 # import lib.tools
 
-import schedule
-import time
+# import schedule
+# import time
 #
 # def job():
 #    print("I'm working...")
@@ -32,6 +32,14 @@ import time
 #    schedule.run_pending()
 #    time.sleep(1)
 
-for x in range (0,100):
-    print (x)
-    time.sleep(2)
+# for x in range (0,100):
+#     print (x)
+#     time.sleep(2)
+
+a = 44
+b = 2
+h = ""
+
+h = "111" if a>b else "222"
+
+print(h)
