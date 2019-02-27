@@ -43,7 +43,7 @@ def insert (table, insertObj):
         values = ','.join(values)
         queryStr = queryStr + ' ( ' + fields + ' ) '
         queryStr = queryStr + ' VALUES ( ' + values + ' ) ' + ';'
-    print(queryStr)
+    # print(queryStr)
     try:
         cursor.execute(queryStr)
         connection.commit()
