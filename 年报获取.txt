@@ -19,7 +19,14 @@ get last price from yahoo
 https://query2.finance.yahoo.com/v7/finance/quote?formatted=true&crumb=qzKRwVIK1az&lang=en-US&region=US&symbols=GOOG%2CFB%2CAMZN%2CNFLX%2CTSLA&fields=longName%2CshortName%2CregularMarketPrice%2CregularMarketChange%2CregularMarketChangePercent%2CmessageBoardId%2CmarketCap%2CunderlyingSymbol%2CunderlyingExchangeSymbol%2CheadSymbolAsString%2CregularMarketVolume%2Cuuid%2CregularMarketOpen%2CfiftyTwoWeekLow%2CfiftyTwoWeekHigh&corsDomain=finance.yahoo.com
 
 get historical data from yahoo:
-https://query2.finance.yahoo.com/v8/finance/chart/AAPL?formatted=true&crumb=qzKRwVIK1az&lang=en-US&region=US&period1=1392739200&period2=1550505600&interval=1mo&events=div%7Csplit&corsDomain=finance.yahoo.com
+month:
+https://query2.finance.yahoo.com/v8/finance/chart/AAPL?formatted=true&crumb=qzKRwVIK1az&lang=en-US&region=US&period1=915120000&period2=1553616000&interval=1mo&events=div%7Csplit&corsDomain=finance.yahoo.com
+
+https://finance.yahoo.com/quote/AAPL/history?period1=915120000&period2=1553616000&interval=1mo&filter=history&frequency=1mo
+
+
+day:
+https://finance.yahoo.com/quote/AAPL/history?period1=951580800&period2=1553616000&interval=1d&filter=history&frequency=1d
 
 CIK MAP:
 http://rankandfiled.com/#/data/tickers
@@ -47,3 +54,5 @@ https://www.sec.gov/Archives/edgar/data/320193/000032019318000145/a10-k201892920
 8Q:财报, 10-k:年报
 
 research target: FB,BRKB,MCS,MSFT,pfe,,jnj,AMGN,
+
+pip freeze > requirements.txt
