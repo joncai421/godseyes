@@ -1,4 +1,5 @@
 import threading
+from datetime import date
 
 def set_interval(func, sec):
     def func_wrapper():
@@ -20,8 +21,8 @@ def timestamp_to_datetime(time):
     return {
         'datetime':date.fromtimestamp(int(time)).strftime('%Y-%m-%d %H:%M:%S'),
         'year':date.fromtimestamp(int(time)).strftime('%Y'),
-        'month':date.fromtimestamp(int(time)).strftime('%m'),
-        'day':date.fromtimestamp(int(time)).strftime('%d'),
+        'month':str(int(date.fromtimestamp(int(time)).strftime('%m'))),
+        'day':str(int(date.fromtimestamp(int(time)).strftime('%d'))),
         'hour':date.fromtimestamp(int(time)).strftime('%H'),
         'mins':date.fromtimestamp(int(time)).strftime('%M'),
         'sec':date.fromtimestamp(int(time)).strftime('%S'),

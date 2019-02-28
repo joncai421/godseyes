@@ -47,7 +47,7 @@ def insert (table, insertObj):
     try:
         cursor.execute(queryStr)
         connection.commit()
-    except MySQLError as e:
+    except e:
         print ('there is a fucking error!:'+e)
         connection.rollback()
     connection.close()
@@ -129,8 +129,8 @@ def select (mainTable, selectFields, conditions, *fromCondition):
         cursor.execute(query)
         result = cursor.fetchall()
         return result
-    except MySQLError as e:
-        print ('there is a fucking error!:'+e)
+    except e:
+        print ('there is a fucking error!')
         return ''
     connection.close()
 

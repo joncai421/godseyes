@@ -125,6 +125,8 @@ import asyncio
 #     # print (type(l[x]))
 #     print (str(x)+':'+str(l[x]))
 
-d = {'a':4,'b':5,'c':6}
-for x in d:
-    print (d[x])
+# d = {'a':4,'b':5,'c':6}
+# for x in d:
+#     print (d[x])
+import lib.dbU
+lib.dbU.update('stock_basic_info', {'has_month_price':'1'},{'stock_symbol':'AAPL'})

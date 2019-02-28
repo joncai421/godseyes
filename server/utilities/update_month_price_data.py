@@ -3,7 +3,7 @@ import lib.tools
 import time
 import random
 import requests
-from_year = 1999
+from_year = 1998
 to_year = 2019
 
 def insert_month_price_table(symbol,raw_data):
@@ -20,51 +20,85 @@ def insert_month_price_table(symbol,raw_data):
     adjclose = raw_data['chart']['result'][0]['indicators']['adjclose'][0]['adjclose']
     length = len(timestamp)
     insert_map = {}
+    total_map = {}
     for index in range(length):
         timeObj = lib.tools.timestamp_to_datetime(timestamp[index])
-        year = timeObj.year
-        month = timeObj.month
-        if from_year <= year and year <=to_year:
+        year = timeObj['year']
+        month = timeObj['month']
+        if from_year <= int(year) and int(year) <=to_year:
             table_name = 'month_price_' + year
             if table_name not in insert_map:
                 insert_map[table_name] = {
-                    'open': {'stock_symbol': symbol, 'price_type': 'open',
-                             'Finsert_time': time.strftime('%Y-%m-%d %H:%M:%S')},
-                    'close': {'stock_symbol': symbol, 'price_type': 'close',
-                              'Finsert_time': time.strftime('%Y-%m-%d %H:%M:%S')},
-                    'high': {'stock_symbol': symbol, 'price_type': 'high',
-                             'Finsert_time': time.strftime('%Y-%m-%d %H:%M:%S')},
-                    'low': {'stock_symbol': symbol, 'price_type': 'low',
-                            'Finsert_time': time.strftime('%Y-%m-%d %H:%M:%S')},
-                    'adjclose': {'stock_symbol': symbol, 'price_type': 'adjclose',
-                                 'Finsert_time': time.strftime('%Y-%m-%d %H:%M:%S')},
-                    'volume': {'stock_symbol': symbol, 'price_type': 'volume',
-                               'Finsert_time': time.strftime('%Y-%m-%d %H:%M:%S')},
-                    'dividends_events': {'stock_symbol': symbol, 'price_type': 'volume',
-                                         'Finsert_time': time.strftime('%Y-%m-%d %H:%M:%S')},
-                    'splits_events': {'stock_symbol': symbol, 'price_type': 'volume',
-                                      'Finsert_time': time.strftime('%Y-%m-%d %H:%M:%S')},
+                    'open': {'stock_symbol': symbol, 'price_type': 'open','day':0,'m1':0,'m2':0,'m3':0,'m4':0,'m5':0,'m6':0,'m7':0,'m8':0,'m9':0,'m10':0,'m11':0,'m12':0,
+                             'Finsert_time': time.strftime('%Y-%m-%d %H:%M:%S'),'Fmodify_time': time.strftime('%Y-%m-%d %H:%M:%S'),'Flastest_modify_time':time.strftime('%Y-%m-%d %H:%M:%S')},
+                    'close': {'stock_symbol': symbol, 'price_type': 'close','day':0,'m1':0,'m2':0,'m3':0,'m4':0,'m5':0,'m6':0,'m7':0,'m8':0,'m9':0,'m10':0,'m11':0,'m12':0,
+                              'Finsert_time': time.strftime('%Y-%m-%d %H:%M:%S'),'Fmodify_time': time.strftime('%Y-%m-%d %H:%M:%S'),'Flastest_modify_time':time.strftime('%Y-%m-%d %H:%M:%S')},
+                    'high': {'stock_symbol': symbol, 'price_type': 'high','day':0,'m1':0,'m2':0,'m3':0,'m4':0,'m5':0,'m6':0,'m7':0,'m8':0,'m9':0,'m10':0,'m11':0,'m12':0,
+                             'Finsert_time': time.strftime('%Y-%m-%d %H:%M:%S'),'Fmodify_time': time.strftime('%Y-%m-%d %H:%M:%S'),'Flastest_modify_time':time.strftime('%Y-%m-%d %H:%M:%S')},
+                    'low': {'stock_symbol': symbol, 'price_type': 'low','day':0,'m1':0,'m2':0,'m3':0,'m4':0,'m5':0,'m6':0,'m7':0,'m8':0,'m9':0,'m10':0,'m11':0,'m12':0,
+                            'Finsert_time': time.strftime('%Y-%m-%d %H:%M:%S'),'Fmodify_time': time.strftime('%Y-%m-%d %H:%M:%S'),'Flastest_modify_time':time.strftime('%Y-%m-%d %H:%M:%S')},
+                    'adjclose': {'stock_symbol': symbol, 'price_type': 'adjclose','day':0,'m1':0,'m2':0,'m3':0,'m4':0,'m5':0,'m6':0,'m7':0,'m8':0,'m9':0,'m10':0,'m11':0,'m12':0,
+                                 'Finsert_time': time.strftime('%Y-%m-%d %H:%M:%S'),'Fmodify_time': time.strftime('%Y-%m-%d %H:%M:%S'),'Flastest_modify_time':time.strftime('%Y-%m-%d %H:%M:%S')},
+                    'volume': {'stock_symbol': symbol, 'price_type': 'volume','day':0,'m1':0,'m2':0,'m3':0,'m4':0,'m5':0,'m6':0,'m7':0,'m8':0,'m9':0,'m10':0,'m11':0,'m12':0,
+                               'Finsert_time': time.strftime('%Y-%m-%d %H:%M:%S'),'Fmodify_time': time.strftime('%Y-%m-%d %H:%M:%S'),'Flastest_modify_time':time.strftime('%Y-%m-%d %H:%M:%S')},
+                    'dividends_events': {'stock_symbol': symbol, 'price_type': 'dividends_events','m1':0,'m2':0,'m3':0,'m4':0,'m5':0,'m6':0,'m7':0,'m8':0,'m9':0,'m10':0,'m11':0,'m12':0,'day':0,
+                                         'Finsert_time': time.strftime('%Y-%m-%d %H:%M:%S'),'Fmodify_time': time.strftime('%Y-%m-%d %H:%M:%S'),'Flastest_modify_time':time.strftime('%Y-%m-%d %H:%M:%S')},
+                    'splits_events': {'stock_symbol': symbol, 'price_type': 'splits_events','m1':0,'m2':0,'m3':0,'m4':0,'m5':0,'m6':0,'m7':0,'m8':0,'m9':0,'m10':0,'m11':0,'m12':0,'day':0,
+                                      'Finsert_time': time.strftime('%Y-%m-%d %H:%M:%S'),'Fmodify_time': time.strftime('%Y-%m-%d %H:%M:%S'),'Flastest_modify_time':time.strftime('%Y-%m-%d %H:%M:%S')},
                 }
+            if year not in total_map:
+                total_map[year] = {'open':0,'close':0,'high':0,'low':0,'adjclose':0,'volume':0,'dividends_events':0,'splits_events':0}
             for p_type in raw_data['chart']['result'][0]['indicators']['quote'][0]:
                 insert_map[table_name][p_type]['m' + month] = raw_data['chart']['result'][0]['indicators']['quote'][0][p_type][index] or 0
-            insert_map[table_name]['adjclose']['m' + month] = adjclose[index] or 0
-            if timestamp[index] in dividends_events:
-                insert_map[table_name]['dividends_events']['m' + month] = dividends_events[timestamp[index]]['amount'] or 0
-            if timestamp[index] in splits_events:
-                insert_map[table_name]['splits_events']['m' + month] = dividends_events[timestamp[index]]['amount'] or 0
+                total_map[year][p_type]+=raw_data['chart']['result'][0]['indicators']['quote'][0][p_type][index] or 0
+
+            adjc = adjclose[index] or 0
+            insert_map[table_name]['adjclose']['m' + month] = adjc
+            total_map[year]['adjclose']+= adjc
+
+            # if timestamp[index] in dividends_events:
+            #     insert_map[table_name]['dividends_events']['m' + month] = dividends_events[timestamp[index]]['amount']
+            #     total_map[year]['dividends_events'] += 1
+            # else:
+            #     insert_map[table_name]['dividends_events']['m' + month] = 0
+            # if timestamp[index] in splits_events:
+            #     insert_map[table_name]['splits_events']['m' + month] = dividends_events[timestamp[index]]['amount']
+            #     total_map[year]['splits_events'] += 1
+            # else:
+            #     insert_map[table_name]['splits_events']['m' + month] = 0
+
+    for d_time in dividends_events:
+        timeObj = lib.tools.timestamp_to_datetime(d_time)
+        year = timeObj['year']
+        month = timeObj['month']
+        insert_map['month_price_' + year]['dividends_events']['m'+month] = dividends_events[d_time]['amount']
+        total_map[year]['dividends_events'] += 1
+
+    for d_time in splits_events:
+        timeObj = lib.tools.timestamp_to_datetime(d_time)
+        year = timeObj['year']
+        month = timeObj['month']
+        insert_map['month_price_' + year]['splits_events']['m'+month] = splits_events[d_time]['denominator']/splits_events[d_time]['numerator']
+        total_map[year]['splits_events'] += 1
+
+    for y in total_map:
+        for p in total_map[y]:
+            insert_map['month_price_' + y][p]['total'] = total_map[y][p]
 
     for year_tables in insert_map:
         i_list = []
-        for prc_type in insert_list[year_tables]:
-            i_list.append(insert_list[year_tables][prc_type])
-        lib.dbU.insert(tables, i_list)
+        for prc_type in insert_map[year_tables]:
+            i_list.append(insert_map[year_tables][prc_type])
+        lib.dbU.insert(year_tables, i_list)
+        print (year_tables+':')
+        # print (i_list)
     print ('insert completed for symbol:' + symbol+',updating has_month_price status..')
-    lib.dbU.update(tables, {'has_month_price',1},{'stock_symbol':symbol})
+    lib.dbU.update('stock_basic_info', {'has_month_price':'1'},{'stock_symbol':symbol})
 
 
 def get_m_price_data(symbol):
     print ('filling starting for symbol:'+symbol)
-    url = 'https://query2.finance.yahoo.com/v8/finance/chart/'+symbol+'?formatted=true&crumb=qzKRwVIK1az&lang=en-US&region=US&period1=951580800&period2=1553616000&interval=1mo&events=div%7Csplit&corsDomain=finance.yahoo.com'
+    url = 'https://query2.finance.yahoo.com/v8/finance/chart/'+symbol+'?formatted=true&crumb=qzKRwVIK1az&lang=en-US&region=US&period1=883584000&period2=1648310400&interval=1mo&events=div%7Csplit&corsDomain=finance.yahoo.com'
     print ('request url:' + url)
     result = requests.get(url).json()
     return result
@@ -75,14 +109,16 @@ def get_symbols (condition):
 
 def update_iterate(symbol_list, index):
     if index<len(symbol_list):
+        print ('update_iterate :' + symbol_list[index][0] + ',index:' + str(index + 1) + ' of ' + str(len(symbol_list)))
         r = get_m_price_data(symbol_list[index][0])
         if r['chart']['result'] is not None:
             insert_month_price_table(symbol_list[index][0],r)
-            index += 1
             print (symbol_list[index][0]+' has completed filling, wait for next one...')
+            index += 1
             time.sleep(random.randint(30,45))
             update_iterate(symbol_list, index)
         else:
+            print (symbol_list[index][0] + ' is empty, wait for next one...')
             print (r)
             index += 1
             update_iterate(symbol_list, index)
@@ -97,7 +133,7 @@ def fill_month_price_data(type):
     symbol_list = get_symbols(condition)
     print (str(len(symbol_list))+' stock to fill data')
 
-    update_iterate([['AAPL']],0)
+    update_iterate([['ORCL'],['STNE'],['SU']],0)
     # update_iterate(symbol_list,0)
 
 
