@@ -9,24 +9,23 @@ def get_stock_info(symbol):
     result = requests.get(url).json()
     return result
 
-def update_iterate(symbol_list, index):
-    if index<len(symbol_list):
+def update_iterate(symbol_list):
+    for index in range(len(symbol_list)):
         print ('update_iterate :' + symbol_list[index][0] + ',index:' + str(index + 1) + ' of ' + str(len(symbol_list)))
         r = get_stock_info(symbol_list[index][0])
         if len(r['quoteResponse']['result'])>0:
             stock_status = 'c' if r['quoteResponse']['result'][0]['tradeable'] == True else 'f'
-            lib.dbU.update('stock_basic_info', {'stock_status': stock_status}, {'stock_symbol': symbol_list[index][0]})
-            index += 1
-            time.sleep(random.randint(3,6))
-            update_iterate(symbol_list, index)
+            stock_name = r['quoteResponse']['result'][0]['longName'] if 'longName' in r['quoteResponse']['result'][0] else ''
+            quoteType = r['quoteResponse']['result'][0]['quoteType'] if 'quoteType' in r['quoteResponse']['result'][0] else ''
+            exchange = r['quoteResponse']['result'][0]['exchange'] if 'exchange' in r['quoteResponse']['result'][0] else ''
+            lib.dbU.update('stock_basic_info', {'stock_status': stock_status,'stock_name':stock_name, 'exchange':exchange}, {'stock_symbol': symbol_list[index][0]})
+            time.sleep(random.randint(1,3))
         else:
             lib.dbU.update('stock_basic_info', {'stock_status': 'not found'}, {'stock_symbol': symbol_list[index][0]})
-            index += 1
-            time.sleep(random.randint(3,6))
-            update_iterate(symbol_list, index)
-    else:
-        print ('---task completed---')
+            time.sleep(random.randint(1,3))
+    print ('---task completed---')
 
-res=lib.dbU.select('stock_basic_info',['stock_symbol','cik'],[['stock_status','=',"'p'"]])
+# res=lib.dbU.select('stock_basic_info',['stock_symbol','stock_name'],[['stock_status','=',"'c'"],['stock_name','=',"''"]])
+res=lib.dbU.select('stock_basic_info',['stock_symbol'],[['stock_status','=',"'p'"]])
 print (len(res))
-update_iterate(res,0)
+update_iterate(res)

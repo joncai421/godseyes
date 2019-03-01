@@ -10,8 +10,8 @@ def insert_month_price_table(symbol,raw_data):
     global from_year
     global to_year
     timestamp = raw_data['chart']['result'][0]['timestamp']
-    dividends_events = raw_data['chart']['result'][0]['events']['dividends'] if 'events' in raw_data['chart']['result'][0] else {}
-    splits_events = raw_data['chart']['result'][0]['events']['splits'] if 'events' in raw_data['chart']['result'][0] else {}
+    dividends_events = raw_data['chart']['result'][0]['events']['dividends'] if 'events' in raw_data['chart']['result'][0] and 'dividends' in raw_data['chart']['result'][0]['events'] else {}
+    splits_events = raw_data['chart']['result'][0]['events']['splits'] if 'events' in raw_data['chart']['result'][0] and 'splits' in raw_data['chart']['result'][0]['events'] else {}
     # open_price = raw_data['chart']['result'][0]['indicators']['quote'][0]['open']
     # close_price = raw_data['chart']['result'][0]['indicators']['quote'][0]['close']
     # high_price = raw_data['chart']['result'][0]['indicators']['quote'][0]['high']
@@ -78,7 +78,7 @@ def insert_month_price_table(symbol,raw_data):
         timeObj = lib.tools.timestamp_to_datetime(d_time)
         year = timeObj['year']
         month = timeObj['month']
-        insert_map['month_price_' + year]['splits_events']['m'+month] = splits_events[d_time]['denominator']/splits_events[d_time]['numerator']
+        insert_map['month_price_' + year]['splits_events']['m'+month] = 0 if splits_events[d_time]['numerator'] ==0 else splits_events[d_time]['denominator']/splits_events[d_time]['numerator']
         total_map[year]['splits_events'] += 1
 
     for y in total_map:
@@ -90,40 +90,36 @@ def insert_month_price_table(symbol,raw_data):
         for prc_type in insert_map[year_tables]:
             i_list.append(insert_map[year_tables][prc_type])
         lib.dbU.insert(year_tables, i_list)
-        print (year_tables+':')
+        # print (year_tables+':')
         # print (i_list)
-    print ('insert completed for symbol:' + symbol+',updating has_month_price status..')
+    # print ('insert completed for symbol:' + symbol+',updating has_month_price status..')
     lib.dbU.update('stock_basic_info', {'has_month_price':'1'},{'stock_symbol':symbol})
 
 
 def get_m_price_data(symbol):
-    print ('filling starting for symbol:'+symbol)
+    # print ('filling starting for symbol:'+symbol)
     url = 'https://query2.finance.yahoo.com/v8/finance/chart/'+symbol+'?formatted=true&crumb=qzKRwVIK1az&lang=en-US&region=US&period1=883584000&period2=1648310400&interval=1mo&events=div%7Csplit&corsDomain=finance.yahoo.com'
-    print ('request url:' + url)
+    # print ('request url:' + url)
     result = requests.get(url).json()
     return result
 
 def get_symbols (condition):
-    res = lib.dbU.select('stock_basic_info',['stock_symbol'],condition)
+    res = lib.dbU.select('stock_basic_info',['stock_symbol','cik'],condition)
     return res
 
-def update_iterate(symbol_list, index):
-    if index<len(symbol_list):
+def update_iterate(symbol_list):
+    for index in range(len(symbol_list)):
         print ('update_iterate :' + symbol_list[index][0] + ',index:' + str(index + 1) + ' of ' + str(len(symbol_list)))
         r = get_m_price_data(symbol_list[index][0])
-        if r['chart']['result'] is not None:
+        if r['chart']['result'] is not None and len(r['chart']['result'][0])>0 and 'timestamp' in r['chart']['result'][0]:
             insert_month_price_table(symbol_list[index][0],r)
             print (symbol_list[index][0]+' has completed filling, wait for next one...')
-            index += 1
-            time.sleep(random.randint(30,45))
-            update_iterate(symbol_list, index)
         else:
             print (symbol_list[index][0] + ' is empty, wait for next one...')
-            print (r)
-            index += 1
-            update_iterate(symbol_list, index)
-    else:
-        print ('---task completed---')
+            lib.dbU.update('stock_basic_info', {'has_month_price': '-1'}, {'stock_symbol': symbol_list[index][0]})
+            # print (r)
+        time.sleep(random.randint(8, 13))
+    print ('---task completed---')
 
 # type: #1:all,2:active
 def fill_month_price_data(type):
@@ -133,7 +129,7 @@ def fill_month_price_data(type):
     symbol_list = get_symbols(condition)
     print (str(len(symbol_list))+' stock to fill data')
 
-    update_iterate([['ORCL'],['STNE'],['SU']],0)
-    # update_iterate(symbol_list,0)
+    # update_iterate([['ORCL'],['STNE'],['SU']])
+    update_iterate(symbol_list)
 
 
