@@ -119,7 +119,8 @@ def update_iterate(symbol_list):
             lib.dbU.update('stock_basic_info', {'has_month_price': '-1'}, {'stock_symbol': symbol_list[index][0]})
             # print (r)
         time.sleep(random.randint(8, 13))
-    print ('---task completed---')
+    print ('---task completed---, check for new data...')
+    fill_month_price_data(2)
 
 # type: #1:all,2:active
 def fill_month_price_data(type):
@@ -129,7 +130,9 @@ def fill_month_price_data(type):
     symbol_list = get_symbols(condition)
     print (str(len(symbol_list))+' stock to fill data')
 
-    # update_iterate([['ORCL'],['STNE'],['SU']])
-    update_iterate(symbol_list)
+    if int(len(symbol_list))>0:
+        update_iterate(symbol_list)
+    else:
+        print ('---task completed---')
 
 

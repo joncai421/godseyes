@@ -185,4 +185,4 @@ import re
 #
 # print (urls)
 string = "xxxftp://www.somewhere.com/over/the/rainbow/image.jpg"
-print (re.match(r'(ftp|http)://.*\.(jpg|png)$', string))
+print (re.match(r'(ftp|http).*\.(jpg|png)$', string))
