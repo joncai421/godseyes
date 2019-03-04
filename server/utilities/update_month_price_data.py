@@ -3,7 +3,7 @@ import lib.tools
 import time
 import random
 import requests
-from_year = 1998
+from_year = 1997
 to_year = 2019
 
 def insert_month_price_table(symbol,raw_data):
@@ -97,11 +97,16 @@ def insert_month_price_table(symbol,raw_data):
 
 
 def get_m_price_data(symbol):
-    # print ('filling starting for symbol:'+symbol)
-    url = 'https://query2.finance.yahoo.com/v8/finance/chart/'+symbol+'?formatted=true&crumb=qzKRwVIK1az&lang=en-US&region=US&period1=883584000&period2=1648310400&interval=1mo&events=div%7Csplit&corsDomain=finance.yahoo.com'
-    # print ('request url:' + url)
-    result = requests.get(url).json()
-    return result
+    # print (1111222)
+    print ('filling starting for symbol:'+symbol)
+    try:
+        url = 'https://query2.finance.yahoo.com/v8/finance/chart/'+symbol+'?formatted=true&crumb=qzKRwVIK1az&lang=en-US&region=US&period1=883584000&period2=1648310400&interval=1mo&events=div%7Csplit&corsDomain=finance.yahoo.com'
+        # print ('request url:' + url)
+        result = requests.get(url)
+        # print (result)
+        return result.json()
+    except:
+       return {'chart':{'result':None}}
 
 def get_symbols (condition):
     res = lib.dbU.select('stock_basic_info',['stock_symbol','cik'],condition)
@@ -118,7 +123,7 @@ def update_iterate(symbol_list):
             print (symbol_list[index][0] + ' is empty, wait for next one...')
             lib.dbU.update('stock_basic_info', {'has_month_price': '-1'}, {'stock_symbol': symbol_list[index][0]})
             # print (r)
-        time.sleep(random.randint(8, 13))
+        # time.sleep(random.randint(2, 5))
     print ('---task completed---, check for new data...')
     fill_month_price_data(2)
 
@@ -131,6 +136,7 @@ def fill_month_price_data(type):
     print (str(len(symbol_list))+' stock to fill data')
 
     if int(len(symbol_list))>0:
+        # update_iterate([['CLI'],['CLM'],['CLMS'],['CLMT'],['CLNE'],['CLNW']])
         update_iterate(symbol_list)
     else:
         print ('---task completed---')

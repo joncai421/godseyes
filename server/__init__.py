@@ -1,3 +1,4 @@
-__all__ = ['lib', 'utilities']
+__all__ = ['lib', 'utilities','config']
 import lib
 import utilities
+import config

@@ -22,7 +22,7 @@ def timestamp_to_datetime(time):
         'datetime':date.fromtimestamp(int(time)).strftime('%Y-%m-%d %H:%M:%S'),
         'year':date.fromtimestamp(int(time)).strftime('%Y'),
         'month':str(int(date.fromtimestamp(int(time)).strftime('%m'))),
-        'day':str(int(date.fromtimestamp(int(time)).strftime('%d'))),
+        'date':str(int(date.fromtimestamp(int(time)).strftime('%d'))),
         'hour':date.fromtimestamp(int(time)).strftime('%H'),
         'mins':date.fromtimestamp(int(time)).strftime('%M'),
         'sec':date.fromtimestamp(int(time)).strftime('%S'),

@@ -1,0 +1,28 @@
+SELECT month_price_2019.stock_symbol from month_price_2019
+left join month_price_2018 on month_price_2019.stock_symbol = month_price_2018.stock_symbol
+LEFT JOIN month_price_2017 on month_price_2017.stock_symbol = month_price_2019.stock_symbol
+LEFT JOIN month_price_2016 on month_price_2017.stock_symbol = month_price_2016.stock_symbol
+LEFT JOIN month_price_2015 on month_price_2015.stock_symbol = month_price_2016.stock_symbol
+where month_price_2019.m1>month_price_2018.m1
+and month_price_2018.m1>month_price_2017.m1
+and month_price_2017.m1>month_price_2016.m1
+and month_price_2016.m1>month_price_2015.m1
+group BY stock_symbol;
+
+SELECT stock_basic_info.*from
+stock_basic_info, month_price_2019, month_price_2018, month_price_2017, month_price_2016, month_price_2015
+where
+stock_basic_info.stock_symbol = month_price_2019.stock_symbol
+and month_price_2018.stock_symbol = month_price_2019.stock_symbol
+and month_price_2017.stock_symbol = month_price_2019.stock_symbol
+and month_price_2016.stock_symbol = month_price_2019.stock_symbol
+and month_price_2015.stock_symbol = month_price_2019.stock_symbol
+and month_price_2019.m1>month_price_2018.m1
+and month_price_2018.m1>month_price_2017.m1
+and month_price_2017.m1>month_price_2016.m1
+and month_price_2016.m1>month_price_2015.m1
+and month_price_2019.price_type ='close'
+and month_price_2018.price_type ='close'
+and month_price_2017.price_type ='close'
+and month_price_2016.price_type ='close'
+and month_price_2015.price_type ='close'

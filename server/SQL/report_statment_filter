@@ -1,0 +1,5 @@
+SELECT *
+FROM (select * from `cash_flow_data` where `year`=2019) cash2019,
+(select * from `cash_flow_data` where `year`=2018) cash2018
+where cash2019.stock_symbol = cash2018.stock_symbol
+and cash2019.investments > cash2018.investments;

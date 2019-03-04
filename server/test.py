@@ -177,12 +177,40 @@ import asyncio
 # # recursion(l,0)
 # loop(l)
 
-import re
+# import re
 
 # url = '<p>Hello World</p><a href="http://example.com">More Examples</a><a href="http://example2.com">Even More Examples</a>'
 #
 # urls = re.findall('https?://(?:[-w.]|(?:%[da-fA-F]{2}))+', url)
 #
 # print (urls)
-string = "xxxftp://www.somewhere.com/over/the/rainbow/image.jpg"
-print (re.match(r'(ftp|http).*\.(jpg|png)$', string))
+# string = "xxxftp://www.somewhere.com/over/the/rainbow/image.jpg"
+# print (re.match(r'(ftp|http).*\.(jpg|png)$', string))
+# import requests
+
+# def get_m_price_data(symbol):
+#     # print (1111222)
+#     print ('filling starting for symbol:'+symbol)
+#     try:
+#         url = 'https://query2.finance.yahoo.com/v8/finance/chart/'+symbol+'?formatted=true&crumb=qzKRwVIK1az&lang=en-US&region=US&period1=883584000&period2=1648310400&interval=1mo&events=div%7Csplit&corsDomain=finance.yahoo.com'
+#         # print ('request url:' + url)
+#         result = requests.get(url)
+#         print (result)
+#         return result.json()
+#     except:
+#        return {'chart':{'result':None}}
+
+# url = 'https://query2.finance.yahoo.com/v8/finance/chart/CLNE?formatted=true&crumb=qzKRwVIK1az&lang=en-US&region=US&period1=951580800&period2=1553616000&interval=1mo&events=div%7Csplit&corsDomain=finance.yahoo.com'
+# result = requests.get(url)
+# print (result.json())
+
+# print (get_m_price_data('CLNE'))
+import json
+
+l = ' {"a":1} ' \
+    ''
+print (json.loads(l))
+# print (len(l))
+# print (len(l)-1)
+# print (l[len(l)-1])
+# print (l[0:len(l)-1])
