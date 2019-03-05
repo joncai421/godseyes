@@ -15,6 +15,7 @@ https://finance.yahoo.com/quote/TME/financials?p=TME&.tsrc=fin-srch
 
 get report from yahoo:??
 https://query1.finance.yahoo.com/v7/finance/quote?formatted=true&crumb=qzKRwVIK1az&lang=en-US&region=US&symbols=TME&fields=messageBoardId%2ClongName%2CshortName%2CmarketCap%2CunderlyingSymbol%2CunderlyingExchangeSymbol%2CheadSymbolAsString%2CregularMarketPrice%2CregularMarketChange%2CregularMarketChangePercent%2CregularMarketVolume%2Cuuid%2CregularMarketOpen%2CfiftyTwoWeekLow%2CfiftyTwoWeekHigh&corsDomain=finance.yahoo.com
+
 get last price from yahoo
 https://query2.finance.yahoo.com/v7/finance/quote?formatted=true&crumb=qzKRwVIK1az&lang=en-US&region=US&symbols=GOOG%2CFB%2CAMZN%2CNFLX%2CTSLA&fields=longName%2CshortName%2CregularMarketPrice%2CregularMarketChange%2CregularMarketChangePercent%2CmessageBoardId%2CmarketCap%2CunderlyingSymbol%2CunderlyingExchangeSymbol%2CheadSymbolAsString%2CregularMarketVolume%2Cuuid%2CregularMarketOpen%2CfiftyTwoWeekLow%2CfiftyTwoWeekHigh&corsDomain=finance.yahoo.com
 

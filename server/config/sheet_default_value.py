@@ -37,7 +37,7 @@ def get_sheet_default_value(type):
             "otherCurrentAssets": 0,#其他流动资产
             "retainedEarnings": 0,#保留盈余
             "otherLiab": 0,#其他负债
-            "treasuryStock": 0,#
+            "treasuryStock": 0,#库存股票(如果资产负债表上出现了库存股票，表明公司曾经回. 购股票，那么这家公司很可能具有一种与之有利的持续性竞争优势。)
             "otherAssets": 0,#其他资产
             "cash": 0,#现金
             "totalCurrentLiabilities": 0,#流动负债
@@ -49,7 +49,7 @@ def get_sheet_default_value(type):
             "netTangibleAssets": 0,#净有形资产
             "shortTermInvestments": 0,#
             "netReceivables": 0,#短期应收账款
-            "longTermDebt": 0,#
+            "longTermDebt": 0,#长期债务
             "inventory": 0,#存货
             "accountsPayable": 0,#应付账款
             "goodWill": 0,#商誉
