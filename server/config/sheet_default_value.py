@@ -12,7 +12,7 @@ def get_sheet_default_value(type):
             "netIncome": 0,#净收益
             "changeInCash": 0,#
             "endDate": 0,#统计日期
-            "repurchaseOfStock": 0,#
+            "repurchaseOfStock": 0,#回购股票
             "totalCashFromOperatingActivities": 0,#
             "depreciation": 0,#折旧损耗及摊稍
             "otherCashflowsFromInvestingActivities": 0,#
@@ -24,7 +24,9 @@ def get_sheet_default_value(type):
             "otherCashflowsFromFinancingActivities": 0,
             "Finsert_time":time.strftime('%Y-%m-%d %H:%M:%S'),
             "Fmodify_time":time.strftime('%Y-%m-%d %H:%M:%S'),
-            "Flastest_modify_time":time.strftime('%Y-%m-%d %H:%M:%S')
+            "Flastest_modify_time":time.strftime('%Y-%m-%d %H:%M:%S'),
+            "depreciation_rate": 0,  #折旧率(depreciation/totalAssets)
+            "capitalExpenditures_rate": 0,  #资本开支率(capitalExpenditures/netIncome)
         }
     elif type == "balanceSheetStatements":
         return {
@@ -56,7 +58,12 @@ def get_sheet_default_value(type):
             "intangibleAssets": 0,#无形资产
             "Finsert_time": time.strftime('%Y-%m-%d %H:%M:%S'),
             "Fmodify_time": time.strftime('%Y-%m-%d %H:%M:%S'),
-            "Flastest_modify_time": time.strftime('%Y-%m-%d %H:%M:%S')
+            "Flastest_modify_time": time.strftime('%Y-%m-%d %H:%M:%S'),
+            "debtRatio": 0,  # 负债率(totalLiab/totalAssets)
+            "receivables_rate": 0,  # 应收账款率(netReceivables/totalAssets)
+            "current_ratio": 0,  # 流动比率(totalCurrentAssets/totalCurrentLiabilities)
+            "total_debt_to_equity_ratio": 0,  # 债务股权比率(totalLiab/totalStockholderEquity)
+
         }
     elif type == "incomeStatementHistory":
         return {
@@ -85,5 +92,12 @@ def get_sheet_default_value(type):
             "netIncomeApplicableToCommonShares": 0,#税收收入/净利润/属于母公司股东的净利润?
             "Finsert_time": time.strftime('%Y-%m-%d %H:%M:%S'),
             "Fmodify_time": time.strftime('%Y-%m-%d %H:%M:%S'),
-            "Flastest_modify_time": time.strftime('%Y-%m-%d %H:%M:%S')
+            "Flastest_modify_time": time.strftime('%Y-%m-%d %H:%M:%S'),
+            "GrossProfitMargin": 0,  # 毛利率(grossProfit/totalRevenue)
+            "research_cost_rate": 0,  # 研发费用比率(researchDevelopment/totalRevenue)
+            "NetInterestRate": 0,  # 净利润率(netIncome/totalRevenue)
+            "SGA_Rate": 0,  # 銷售及管理費用费用比率(sellingGeneralAdministrative/totalRevenue)
+            "costOfRevenue_Rate": 0,  # 销售成本/营业成本比率(costOfRevenue/totalRevenue)
+            "interest_Rate": 0,  # 利息比率(interestExpense/totalRevenue)
+            "Earnings_per_share": 0,  # 每股净收益(netIncome/市场股数(总股本))
         }

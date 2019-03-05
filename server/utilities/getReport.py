@@ -105,6 +105,7 @@ def update_iterate(symbol_list):
 
 def getReport():
     condition = [['hasReport', '=', '0'],['has_month_price', '=', '1']]
+    # condition = [['hasReport', '=', '0'],['up2015to2018', '=', '1']]
     # condition = [['hasReport', '=', '0'],['up2015to2019', '=', '1']]
     symbol_list = get_symbols(condition)
     print (str(len(symbol_list)) + ' stock to fill data')
