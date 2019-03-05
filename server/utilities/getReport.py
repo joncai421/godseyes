@@ -18,6 +18,7 @@ import time
 import urllib.request
 import re
 import random
+import copy
 import json
 sheets_tables={'cashflowStatementHistory':{'table':'cash_flow_data','type':'a','index':'cashflowStatements'},
                'cashflowStatementHistoryQuarterly':{'table':'cash_flow_data','type':'q','index':'cashflowStatements'},
@@ -55,7 +56,7 @@ def getPage(symbol):
 
 def update_iterate(symbol_list):
     global sheets_tables
-    hasReport = 0
+    hasReport = -1
     for index in range(len(symbol_list)):
         insert_obj = {'cash_flow_data':[],'balance_sheet_data':[],'income_statement_data':[]}
         symbol = symbol_list[index][0]
@@ -70,9 +71,11 @@ def update_iterate(symbol_list):
                     report_type = sheets_tables[sheets]['type']
                     index = sheets_tables[sheets]['index']
                     if index in reportObj[sheets]:
-                        sheet_obj = config.sheet_default_value.get_sheet_default_value(index).copy()
-                        sheet_obj['stock_symbol'] = symbol
                         for report in reportObj[sheets][index]:
+                            sheet_obj = copy.deepcopy(config.sheet_default_value.get_sheet_default_value(index))
+                            sheet_obj['stock_symbol'] = symbol
+                            # print ('--------'+sheets+'_'+index+'--------')
+                            # print (report)
                             for field in report:
                                 if field != 'maxAge':
                                     sheet_obj[field] = report[field]['raw'] if 'raw' in report[field] else 0
@@ -91,21 +94,23 @@ def update_iterate(symbol_list):
 
                             insert_obj[table_name].append(sheet_obj)
                             hasReport = 1
+
             for table in insert_obj:
                 if len(insert_obj[table])>0:
                     lib.dbU.insert(table, insert_obj[table])
             lib.dbU.update('stock_basic_info', {'hasReport': hasReport}, {'stock_symbol': symbol})
         else:
             print ('reportObj invalid')
-        time.sleep(random.randint(2, 5))
+        # time.sleep(random.randint(2, 5))
 
 def getReport():
-    condition = [['hasReport', '=', '0'],['up2015to2019', '=', '1']]
+    condition = [['hasReport', '=', '0'],['has_month_price', '=', '1']]
+    # condition = [['hasReport', '=', '0'],['up2015to2019', '=', '1']]
     symbol_list = get_symbols(condition)
     print (str(len(symbol_list)) + ' stock to fill data')
     if int(len(symbol_list)) > 0:
-        update_iterate([['ATO']])
-        # update_iterate(symbol_list)
+        # update_iterate([['ATO']])
+        update_iterate(symbol_list)
     else:
         print ('---task completed---')
 

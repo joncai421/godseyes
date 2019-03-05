@@ -205,12 +205,34 @@ import asyncio
 # print (result.json())
 
 # print (get_m_price_data('CLNE'))
-import json
+# import json
 
-l = ' {"a":1} ' \
-    ''
-print (json.loads(l))
+# l = ' {"a":1} ' \
+#     ''
+# print (json.loads(l))
 # print (len(l))
 # print (len(l)-1)
 # print (l[len(l)-1])
 # print (l[0:len(l)-1])
+
+import copy
+def aa():
+    return {
+        'a':1,
+        'b':1,
+        'c':1,
+        'd':1,
+    }
+l = [
+    {'a':5,'b':5,'c':5,'d':5,'e':6},
+    {'a':6,'b':6,'6':6,'d':6,'e':7},
+    {'a':7,'b':7,'c':7,'d':7,'e':8},
+    {'a':8,'b':8,'c':8,'d':8,'e':9},
+    ]
+xx=[]
+for i in l:
+    o = copy.deepcopy(aa())
+    for x in i:
+        o[x] = i[x]
+    xx.append(o)
+print (xx)
