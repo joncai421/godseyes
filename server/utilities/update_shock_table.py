@@ -9,7 +9,7 @@ def get_index_data(index):
     return result
 
 def get_existed_symbol():
-    res = lib.dbU.select('stock_basic_info',['stock_symbol','cik'],[])
+    res = lib.dbU.select('stock_basic_info',['stock_symbol','cik'],[],[])
     stock_symbol_list = []
     for x in res:
         stock_symbol_list.append(x[0])

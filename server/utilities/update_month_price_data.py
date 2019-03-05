@@ -109,7 +109,7 @@ def get_m_price_data(symbol):
        return {'chart':{'result':None}}
 
 def get_symbols (condition):
-    res = lib.dbU.select('stock_basic_info',['stock_symbol','cik'],condition)
+    res = lib.dbU.select('stock_basic_info',['stock_symbol','cik'],condition,[])
     return res
 
 def update_iterate(symbol_list):

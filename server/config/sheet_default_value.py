@@ -11,6 +11,7 @@ def get_sheet_default_value(type):
             "issuanceOfStock": 0,#
             "netIncome": 0,#净收益
             "changeInCash": 0,#
+            "effectOfExchangeRate": 0,#
             "endDate": 0,#统计日期
             "repurchaseOfStock": 0,#回购股票
             "totalCashFromOperatingActivities": 0,#
@@ -27,6 +28,7 @@ def get_sheet_default_value(type):
             "Flastest_modify_time":time.strftime('%Y-%m-%d %H:%M:%S'),
             "depreciation_rate": 0,  #折旧率(depreciation/totalAssets)
             "capitalExpenditures_rate": 0,  #资本开支率(capitalExpenditures/netIncome)
+            "Fstatus":0
         }
     elif type == "balanceSheetStatements":
         return {
@@ -42,6 +44,10 @@ def get_sheet_default_value(type):
             "treasuryStock": 0,#库存股票(如果资产负债表上出现了库存股票，表明公司曾经回. 购股票，那么这家公司很可能具有一种与之有利的持续性竞争优势。)
             "otherAssets": 0,#其他资产
             "cash": 0,#现金
+            "capitalSurplus": 0,#
+            "deferredLongTermLiab": 0,#
+            "minorityInterest": 0,#
+            "deferredLongTermAssetCharges": 0,#
             "totalCurrentLiabilities": 0,#流动负债
             "shortLongTermDebt": 0,#长期债务
             "otherStockholderEquity": 0,#
@@ -63,6 +69,7 @@ def get_sheet_default_value(type):
             "receivables_rate": 0,  # 应收账款率(netReceivables/totalAssets)
             "current_ratio": 0,  # 流动比率(totalCurrentAssets/totalCurrentLiabilities)
             "total_debt_to_equity_ratio": 0,  # 债务股权比率(totalLiab/totalStockholderEquity)
+            "Fstatus": 0
 
         }
     elif type == "incomeStatementHistory":
@@ -99,5 +106,6 @@ def get_sheet_default_value(type):
             "SGA_Rate": 0,  # 銷售及管理費用费用比率(sellingGeneralAdministrative/totalRevenue)
             "costOfRevenue_Rate": 0,  # 销售成本/营业成本比率(costOfRevenue/totalRevenue)
             "interest_Rate": 0,  # 利息比率(interestExpense/totalRevenue)
-            "Earnings_per_share": 0,  # 每股净收益(netIncome/市场股数(总股本))
+            "Earnings_per_share": 0,  # 每股净收益(netIncome/市场股数(总股本)share_capital/sharesOutstanding)
+            "Fstatus": 0
         }

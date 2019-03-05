@@ -29,30 +29,34 @@ sheets_tables={'cashflowStatementHistory':{'table':'cash_flow_data','type':'a','
                }
 
 def get_symbols (condition):
-    res = lib.dbU.select('stock_basic_info',['stock_symbol'],condition)
+    res = lib.dbU.select('stock_basic_info',['stock_symbol'],condition,[])
     return res
 
 def getPage(symbol):
-    url = 'https://finance.yahoo.com/quote/AAPL/financials?p='+symbol
-    response = urllib.request.urlopen(url)
-    result = response.read().decode('utf-8')
-    # print(result)
-    match = re.search(r'(root\.App\.main).*', result)
-    if match:
-        try:
-            match = match.group(0)
-            match= match.replace('root.App.main =', '')
-            match= match.replace('root.App.main=', '')
-            mlen = len(match)
-            if match[mlen-1]==";":
-                match = match[0:mlen-1]
-            match = json.loads(match)
-        except:
-            print ('json convert failed')
-            match={}
-        return match
-    else:
+    url = 'https://finance.yahoo.com/quote/'+symbol+'/financials?p='+symbol
+    try:
+        response = urllib.request.urlopen(url, timeout=5)
+        result = response.read().decode('utf-8')
+        # print(result)
+        match = re.search(r'(root\.App\.main).*', result)
+        if match:
+            try:
+                match = match.group(0)
+                match = match.replace('root.App.main =', '')
+                match = match.replace('root.App.main=', '')
+                mlen = len(match)
+                if match[mlen - 1] == ";":
+                    match = match[0:mlen - 1]
+                match = json.loads(match)
+            except:
+                print ('json convert failed')
+                match = {}
+            return match
+        else:
+            return {}
+    except:
         return {}
+
 
 def update_iterate(symbol_list):
     global sheets_tables
@@ -78,15 +82,21 @@ def update_iterate(symbol_list):
                             # print (report)
                             for field in report:
                                 if field != 'maxAge':
+                                    if field not in sheet_obj:
+                                        print ('1--------------------------')
+                                        print (symbol)
+                                        print (table_name)
+                                        print (field)
+                                        print ('2--------------------------')
                                     sheet_obj[field] = report[field]['raw'] if 'raw' in report[field] else 0
                             sheet_obj['report_type'] = report_type
                             # sheet_obj['Finsert_time'] = time.strftime('%Y-%m-%d %H:%M:%S')
                             # sheet_obj['Fmodify_time'] = time.strftime('%Y-%m-%d %H:%M:%S')
                             # sheet_obj['Flastest_modify_time']=time.strftime('%Y-%m-%d %H:%M:%S')
                             timeObj = lib.tools.timestamp_to_datetime(report['endDate']['raw'])
-                            sheet_obj['year'] = timeObj['year']
-                            sheet_obj['month'] = timeObj['month']
-                            sheet_obj['date'] = timeObj['date']
+                            sheet_obj['report_year'] = timeObj['year']
+                            sheet_obj['report_month'] = timeObj['month']
+                            sheet_obj['report_date'] = timeObj['date']
                             # if len(sheet_obj.keys())==34:
                             #     print (888)
                             #     print (table_name)
@@ -104,8 +114,8 @@ def update_iterate(symbol_list):
         # time.sleep(random.randint(2, 5))
 
 def getReport():
-    condition = [['hasReport', '=', '0'],['has_month_price', '=', '1']]
-    # condition = [['hasReport', '=', '0'],['up2015to2018', '=', '1']]
+    # condition = [['hasReport', '=', '0'],['has_month_price', '=', '1'],['up2015to2019', '!=', '1'],['up2015to2018', '!=', '1']]
+    condition = [['hasReport', '=', '0'],['up2015to2018', '=', '1']]
     # condition = [['hasReport', '=', '0'],['up2015to2019', '=', '1']]
     symbol_list = get_symbols(condition)
     print (str(len(symbol_list)) + ' stock to fill data')

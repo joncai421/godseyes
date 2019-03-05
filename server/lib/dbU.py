@@ -105,13 +105,13 @@ select('stock_basic_info',
        ['*'],[])
        
 '''
-def select (mainTable, selectFields, conditions, *fromCondition):
+def select (mainTable, selectFields, conditions, fromCondition):
     connection = pymysql.connect(host="localhost", user="j", passwd="123QWEasd", db="wallstreet", charset='utf8',port=3306)
     cursor = connection.cursor()
     query = 'SELECT ' + ','.join(selectFields) +' FROM '+mainTable +' '
     if isinstance(fromCondition, str):
         query = query+fromCondition
-    elif type(fromCondition)==list:
+    elif type(fromCondition)==list and len(fromCondition)>0:
         from_list = []
         for f in range(len(fromCondition)):
             query=query+' LEFT JOIN '+fromCondition[f][0]+' ON '+fromCondition[f][1]+fromCondition[f][2]+fromCondition[f][3]
