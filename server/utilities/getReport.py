@@ -114,8 +114,9 @@ def update_iterate(symbol_list):
         # time.sleep(random.randint(2, 5))
 
 def getReport():
-    # condition = [['hasReport', '=', '0'],['has_month_price', '=', '1'],['up2015to2019', '!=', '1'],['up2015to2018', '!=', '1']]
-    condition = [['hasReport', '=', '0'],['up2015to2018', '=', '1']]
+    condition = [['hasReport', '=', '0'],['has_month_price', '=', '1'],['fid%3','=','2']]
+    # condition = [['hasReport', '=', '0'],['up2015to2018', '=', '1'],['fid%2','!=','0']]
+    # condition = [['hasReport', '=', '0'],['up2015to2018', '=', '1']]
     # condition = [['hasReport', '=', '0'],['up2015to2019', '=', '1']]
     symbol_list = get_symbols(condition)
     print (str(len(symbol_list)) + ' stock to fill data')

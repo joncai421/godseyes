@@ -39,7 +39,7 @@ def get_sheet_default_value(type):
             "endDate": 0,#统计日期
             "commonStock": 0,#普通股股本
             "otherCurrentAssets": 0,#其他流动资产
-            "retainedEarnings": 0,#保留盈余
+            "retainedEarnings": 0,#保留盈余/留存收益
             "otherLiab": 0,#其他负债
             "treasuryStock": 0,#库存股票(如果资产负债表上出现了库存股票，表明公司曾经回. 购股票，那么这家公司很可能具有一种与之有利的持续性竞争优势。)
             "otherAssets": 0,#其他资产
@@ -69,6 +69,7 @@ def get_sheet_default_value(type):
             "receivables_rate": 0,  # 应收账款率(netReceivables/totalAssets)
             "current_ratio": 0,  # 流动比率(totalCurrentAssets/totalCurrentLiabilities)
             "total_debt_to_equity_ratio": 0,  # 债务股权比率(totalLiab/totalStockholderEquity)
+            "retainedEarnings_rate": 0,  # 留存收益率(retainedEarnings/netIncome)
             "Fstatus": 0
 
         }

@@ -37,8 +37,24 @@ def update_analyze_cash_sheet():
 
 def update_analyze_balance_sheet():
     res = lib.dbU.select('balance_sheet_data',[
-        'stock_symbol','bid','totalLiab','totalAssets','netReceivables','totalCurrentAssets','totalStockholderEquity','totalCurrentLiabilities'
-    ],[],[])
+        'balance_sheet_data.stock_symbol',
+        'balance_sheet_data.bid',
+        'balance_sheet_data.totalLiab',
+        'balance_sheet_data.totalAssets',
+        'balance_sheet_data.netReceivables',
+        'balance_sheet_data.totalCurrentAssets',
+        'balance_sheet_data.totalStockholderEquity',
+        'balance_sheet_data.totalCurrentLiabilities'
+        'balance_sheet_data.retainedEarnings'
+        'income_statement_data.netIncome'
+    ],[
+        ['balance_sheet_data.report_year', '=', 'income_statement_data.report_year'],
+        ['balance_sheet_data.report_month', '=', 'income_statement_data.report_month'],
+        ['balance_sheet_data.report_type', '=', 'income_statement_data.report_type'],
+        ['balance_sheet_data.Fstatus', '=', '0'],
+    ],[
+        ['income_statement_data', 'income_statement_data.stock_symbol', '=', 'balance_sheet_data.stock_symbol'],
+    ])
 
     for index in range(len(res)):
         symbol = res[index][0]
@@ -49,13 +65,16 @@ def update_analyze_balance_sheet():
         totalCurrentAssets = int(res[index][5])
         totalStockholderEquity = int(res[index][6])
         totalCurrentLiabilities = int(res[index][7])
+        retainedEarnings = int(res[index][8])
+        netIncome = int(res[index][9])
         debtRatio = round((totalLiab / totalAssets) * 100, 4)
         receivables_rate = round((netReceivables / totalAssets) * 100, 4)
         current_ratio = round((totalCurrentAssets / totalCurrentLiabilities) * 100, 4)
         total_debt_to_equity_ratio = round((totalLiab / totalStockholderEquity) * 100, 4)
+        retainedEarnings_rate = round((retainedEarnings / netIncome) * 100, 4)
 
         print ('update_iterate :' + symbol + ',index:' + str(index + 1) + ' of ' + str(len(res)))
-        lib.dbU.update('balance_sheet_data', {'debtRatio': str(debtRatio),'receivables_rate':str(receivables_rate),'current_ratio':str(current_ratio),'total_debt_to_equity_ratio':str(total_debt_to_equity_ratio),'Fstatus':'1'}, {'bid': bid})
+        # lib.dbU.update('balance_sheet_data', {'debtRatio': str(debtRatio),'receivables_rate':str(receivables_rate),'current_ratio':str(current_ratio),'total_debt_to_equity_ratio':str(total_debt_to_equity_ratio),'retainedEarnings_rate':retainedEarnings_rate,'Fstatus':'1'}, {'bid': bid})
 
 def update_analyze_income_sheet():
     res = lib.dbU.select('income_statement_data',[
@@ -94,7 +113,7 @@ def update_analyze_income_sheet():
         interest_Rate = round((interestExpense/totalRevenue)*100,4)
         Earnings_per_share = round(netIncome/share_capital,4)
         print ('update_iterate :' + symbol + ',index:' + str(index + 1) + ' of ' + str(len(res)))
-        lib.dbU.update('income_statement_data', {'GrossProfitMargin': str(GrossProfitMargin),'research_cost_rate':str(research_cost_rate),
-                                                 'NetInterestRate': str(NetInterestRate),'SGA_Rate':str(SGA_Rate),
-                                                 'costOfRevenue_Rate': str(costOfRevenue_Rate),'interest_Rate':str(interest_Rate),
-                                                 'Earnings_per_share':str(Earnings_per_share),'Fstatus':'1'}, {'ic_id': ic_id})
+        # lib.dbU.update('income_statement_data', {'GrossProfitMargin': str(GrossProfitMargin),'research_cost_rate':str(research_cost_rate),
+        #                                          'NetInterestRate': str(NetInterestRate),'SGA_Rate':str(SGA_Rate),
+        #                                          'costOfRevenue_Rate': str(costOfRevenue_Rate),'interest_Rate':str(interest_Rate),
+        #                                          'Earnings_per_share':str(Earnings_per_share),'Fstatus':'1'}, {'ic_id': ic_id})
