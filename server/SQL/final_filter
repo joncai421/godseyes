@@ -1,0 +1,17 @@
+select income_statement_data.stock_symbol from income_statement_data LEFT JOIN balance_sheet_data on income_statement_data.stock_symbol = balance_sheet_data.stock_symbol LEFT JOIN cash_flow_data on cash_flow_data.stock_symbol = income_statement_data.stock_symbol where income_statement_data.Fmark=1 and balance_sheet_data.Fmark=1 and cash_flow_data.Fmark=1 GROUP BY stock_symbol;
+
+select * from (SELECT * FROM `income_statement_data` where GrossProfitMargin>50 and report_type='a' and NetInterestRate>30 and SGA_Rate<=30  and research_cost_rate<30 and costOfRevenue_Rate<30 and report_year =2018) a,
+(SELECT * FROM `income_statement_data` where GrossProfitMargin>50 and report_type='a' and NetInterestRate>30 and SGA_Rate<=30  and research_cost_rate<30 and costOfRevenue_Rate<30 and report_year =2017) b,
+(SELECT * FROM `income_statement_data` where GrossProfitMargin>50 and report_type='a' and NetInterestRate>30 and SGA_Rate<=30  and research_cost_rate<30 and costOfRevenue_Rate<30 and report_year =2016) c
+where a.netIncome >b.netIncome
+and b.netIncome >c.netIncome ;
+
+SELECT cash_flow_data.* FROM `cash_flow_data` LEFT JOIN stock_basic_info on stock_basic_info.stock_symbol = cash_flow_data.stock_symbol where depreciation_rate<6 and capitalExpenditures_rate<40 and netIncome>0  ORDER BY repurchaseOfStock_rate DESC;
+
+SELECT balance_sheet_data.* FROM `balance_sheet_data` LEFT JOIN stock_basic_info on stock_basic_info.stock_symbol = balance_sheet_data.stock_symbol where debtRatio<25 and retainedEarnings>0 and retainedEarnings_rate>0 and up2015to2018 =1 and treasuryStock<0 ORDER BY stock_symbol;
+
+select income_statement_data.stock_symbol
+from income_statement_data LEFT JOIN balance_sheet_data on income_statement_data.stock_symbol = balance_sheet_data.stock_symbol
+ where income_statement_data.Fmark=1 and balance_sheet_data.Fmark=2 GROUP BY stock_symbol;
+
+ select stock_symbol,totalAssets,totalLiab,otherCurrentAssets,otherAssets,totalCurrentAssets, netTangibleAssets,intangibleAssets,totalStockholderEquity,otherStockholderEquity,longTermInvestments,treasuryStock,  longTermDebt from balance_sheet_data where report_type='a' and stock_symbol IN ('FB','V') and report_year=2018

@@ -28,12 +28,14 @@ def get_sheet_default_value(type):
             "Flastest_modify_time":time.strftime('%Y-%m-%d %H:%M:%S'),
             "depreciation_rate": 0,  #折旧率(depreciation/totalAssets)
             "capitalExpenditures_rate": 0,  #资本开支率(capitalExpenditures/netIncome)
+            "capitalExpenditures_rate2": 0,  #资本开支率(capitalExpenditures-abs(repurchaseOfStock/netIncome))
+            "repurchaseOfStock_rate": 0,  #资本开支率repurchaseOfStock/netIncome
             "Fstatus":0
         }
     elif type == "balanceSheetStatements":
         return {
             "totalLiab": 0,#合计总负债
-            "totalStockholderEquity": 0,#股东权益合计
+            "totalStockholderEquity": 0,#股东权益合计(一个企业的资产分为两部分，一部分是股东的权益，就是所有者权益，还有一部分是借(或者欠)别人的，即负债，负债跟所有者权益一起就构成了企业的总资产)
             "otherCurrentLiab": 0,#其他流动负债
             "totalAssets": 0,#合计总资产
             "endDate": 0,#统计日期

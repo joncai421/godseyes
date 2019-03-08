@@ -27,12 +27,14 @@ def update_iterate(symbol_list):
             lib.dbU.update('stock_basic_info', {'market_capital':market_capital, 'share_capital':share_capital}, {'stock_symbol': symbol_list[index][0]})
             # lib.dbU.update('stock_basic_info', {'stock_status': stock_status,'stock_name':stock_name, 'exchange':exchange,'market_capital':market_capital, 'share_capital':share_capital}, {'stock_symbol': symbol_list[index][0]})
             # time.sleep(random.randint(1,3))
-        # else:
+        else:
+            lib.dbU.update('stock_basic_info', {'market_capital': '-1', 'share_capital': '-1'},
+                           {'stock_symbol': symbol_list[index][0]})
             # lib.dbU.update('stock_basic_info', {'stock_status': 'not found'}, {'stock_symbol': symbol_list[index][0]})
             # time.sleep(random.randint(1,3))
     print ('---task completed---')
 
 # res=lib.dbU.select('stock_basic_info',['stock_symbol','stock_name'],[['stock_status','=',"'c'"],['stock_name','=',"''"]],[])
-res=lib.dbU.select('stock_basic_info',['stock_symbol'],[['up2015to2018','=','1'],['market_capital','=','0']],[])
+res=lib.dbU.select('stock_basic_info',['stock_symbol'],[['hasReport','=','1'],['market_capital','=','0'],['fid%3','=','2']],[])
 print (len(res))
 update_iterate(res)

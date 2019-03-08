@@ -235,4 +235,5 @@ import asyncio
 #     for x in i:
 #         o[x] = i[x]
 #     xx.append(o)
-print (abs(-999))
+print (isinstance(99, int))
+print (round(0*100, 4))

@@ -21,3 +21,6 @@ elif sys.argv[1] == '5':
 elif sys.argv[1] == '6':
     print ('---balance sheet data analyze update---')
     ar.update_analyze_balance_sheet()
+elif sys.argv[1] == '7':
+    print ('---income sheet data analyze update---')
+    ar.update_analyze_income_sheet()

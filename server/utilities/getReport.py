@@ -111,10 +111,11 @@ def update_iterate(symbol_list):
             lib.dbU.update('stock_basic_info', {'hasReport': hasReport}, {'stock_symbol': symbol})
         else:
             print ('reportObj invalid')
+            lib.dbU.update('stock_basic_info', {'hasReport': '-1'}, {'stock_symbol': symbol})
         # time.sleep(random.randint(2, 5))
 
 def getReport():
-    condition = [['hasReport', '=', '0'],['has_month_price', '=', '1'],['fid%3','=','2']]
+    condition = [['hasReport', '=', '-1']]
     # condition = [['hasReport', '=', '0'],['up2015to2018', '=', '1'],['fid%2','!=','0']]
     # condition = [['hasReport', '=', '0'],['up2015to2018', '=', '1']]
     # condition = [['hasReport', '=', '0'],['up2015to2019', '=', '1']]

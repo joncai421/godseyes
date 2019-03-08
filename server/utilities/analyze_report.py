@@ -2,6 +2,18 @@ import lib.dbU
 import time
 import requests
 import random
+
+def getDivided (a,b):
+    a = a if isinstance(a, int) else int(a)
+    b = b if isinstance(b, int) else int(b)
+    if a == 0 or b == 0:
+        return 0
+    else:
+        return a / b
+
+def getRate (a,b):
+    return round(getDivided(a,b)*100, 4)
+
 def update_analyze_cash_sheet():
     res = lib.dbU.select('cash_flow_data',[
         'cash_flow_data.stock_symbol',
@@ -9,7 +21,8 @@ def update_analyze_cash_sheet():
         'cash_flow_data.depreciation',
         'cash_flow_data.capitalExpenditures',
         'balance_sheet_data.totalAssets',
-        'income_statement_data.netIncome'
+        'income_statement_data.netIncome',
+        'cash_flow_data.repurchaseOfStock',
     ],[
         ['cash_flow_data.report_year','=','balance_sheet_data.report_year'],
         ['cash_flow_data.report_year','=','income_statement_data.report_year'],
@@ -17,7 +30,8 @@ def update_analyze_cash_sheet():
         ['cash_flow_data.report_month','=','balance_sheet_data.report_month'],
         ['cash_flow_data.report_type','=','balance_sheet_data.report_type'],
         ['cash_flow_data.report_type','=','income_statement_data.report_type'],
-        ['cash_flow_data.Fstatus','=','0'],
+        ['cash_flow_data.capitalExpenditures_rate2','=','0'],
+        # ['cash_flow_data.Fstatus','=','0'],
        ],[
         ['balance_sheet_data', 'cash_flow_data.stock_symbol', '=', 'balance_sheet_data.stock_symbol'],
         ['income_statement_data','cash_flow_data.stock_symbol', '=', 'income_statement_data.stock_symbol'],
@@ -30,10 +44,13 @@ def update_analyze_cash_sheet():
         capitalExpenditures = abs(int(res[index][3]))
         totalAssets = int(res[index][4])
         netIncome = int(res[index][5])
-        depreciation_rate = round((depreciation/totalAssets)*100,4)
-        capitalExpenditures_rate = round((capitalExpenditures/netIncome)*100,4)
+        repurchaseOfStock = int(res[index][6])
+        depreciation_rate = getRate(depreciation,totalAssets)
+        capitalExpenditures_rate = getRate(capitalExpenditures,netIncome)
+        capitalExpenditures_rate2 = getRate(capitalExpenditures-abs(repurchaseOfStock),netIncome)
+        repurchaseOfStock_rate = getRate(abs(repurchaseOfStock),netIncome)
         print ('update_iterate :' + symbol + ',index:' + str(index + 1) + ' of ' + str(len(res)))
-        lib.dbU.update('cash_flow_data', {'depreciation_rate': str(depreciation_rate),'capitalExpenditures_rate':str(capitalExpenditures_rate),'Fstatus':'1'}, {'cid': cid})
+        lib.dbU.update('cash_flow_data', {'repurchaseOfStock_rate':repurchaseOfStock_rate,'capitalExpenditures_rate2':capitalExpenditures_rate2,'depreciation_rate': str(depreciation_rate),'capitalExpenditures_rate':str(capitalExpenditures_rate),'Fstatus':'1'}, {'cid': cid})
 
 def update_analyze_balance_sheet():
     res = lib.dbU.select('balance_sheet_data',[
@@ -44,9 +61,9 @@ def update_analyze_balance_sheet():
         'balance_sheet_data.netReceivables',
         'balance_sheet_data.totalCurrentAssets',
         'balance_sheet_data.totalStockholderEquity',
-        'balance_sheet_data.totalCurrentLiabilities'
-        'balance_sheet_data.retainedEarnings'
-        'income_statement_data.netIncome'
+        'balance_sheet_data.totalCurrentLiabilities',
+        'balance_sheet_data.retainedEarnings',
+        'income_statement_data.netIncome',
     ],[
         ['balance_sheet_data.report_year', '=', 'income_statement_data.report_year'],
         ['balance_sheet_data.report_month', '=', 'income_statement_data.report_month'],
@@ -67,14 +84,14 @@ def update_analyze_balance_sheet():
         totalCurrentLiabilities = int(res[index][7])
         retainedEarnings = int(res[index][8])
         netIncome = int(res[index][9])
-        debtRatio = round((totalLiab / totalAssets) * 100, 4)
-        receivables_rate = round((netReceivables / totalAssets) * 100, 4)
-        current_ratio = round((totalCurrentAssets / totalCurrentLiabilities) * 100, 4)
-        total_debt_to_equity_ratio = round((totalLiab / totalStockholderEquity) * 100, 4)
-        retainedEarnings_rate = round((retainedEarnings / netIncome) * 100, 4)
+        debtRatio = getRate(totalLiab,totalAssets)
+        receivables_rate = getRate(netReceivables,totalAssets)
+        current_ratio = getRate(totalCurrentAssets,totalCurrentLiabilities)
+        total_debt_to_equity_ratio = getRate(totalLiab,totalStockholderEquity)
+        retainedEarnings_rate = getRate(retainedEarnings,netIncome)
 
         print ('update_iterate :' + symbol + ',index:' + str(index + 1) + ' of ' + str(len(res)))
-        # lib.dbU.update('balance_sheet_data', {'debtRatio': str(debtRatio),'receivables_rate':str(receivables_rate),'current_ratio':str(current_ratio),'total_debt_to_equity_ratio':str(total_debt_to_equity_ratio),'retainedEarnings_rate':retainedEarnings_rate,'Fstatus':'1'}, {'bid': bid})
+        lib.dbU.update('balance_sheet_data', {'debtRatio': str(debtRatio),'receivables_rate':str(receivables_rate),'current_ratio':str(current_ratio),'total_debt_to_equity_ratio':str(total_debt_to_equity_ratio),'retainedEarnings_rate':retainedEarnings_rate,'Fstatus':'1'}, {'bid': bid})
 
 def update_analyze_income_sheet():
     res = lib.dbU.select('income_statement_data',[
@@ -105,15 +122,15 @@ def update_analyze_income_sheet():
         costOfRevenue = int(res[index][7])
         interestExpense = int(res[index][8])
         share_capital = int(res[index][9])
-        GrossProfitMargin = round((grossProfit/totalRevenue)*100,4)
-        research_cost_rate = round((researchDevelopment/totalRevenue)*100,4)
-        NetInterestRate = round((netIncome/totalRevenue)*100,4)
-        SGA_Rate = round((sellingGeneralAdministrative/totalRevenue)*100,4)
-        costOfRevenue_Rate = round((costOfRevenue/totalRevenue)*100,4)
-        interest_Rate = round((interestExpense/totalRevenue)*100,4)
-        Earnings_per_share = round(netIncome/share_capital,4)
+        GrossProfitMargin = getRate(grossProfit,totalRevenue)
+        research_cost_rate = getRate(researchDevelopment,totalRevenue)
+        NetInterestRate = getRate(netIncome,totalRevenue)
+        SGA_Rate = getRate(sellingGeneralAdministrative,totalRevenue)
+        costOfRevenue_Rate = getRate(costOfRevenue,totalRevenue)
+        interest_Rate = getRate(interestExpense,totalRevenue)
+        Earnings_per_share = getDivided(netIncome,share_capital)
         print ('update_iterate :' + symbol + ',index:' + str(index + 1) + ' of ' + str(len(res)))
-        # lib.dbU.update('income_statement_data', {'GrossProfitMargin': str(GrossProfitMargin),'research_cost_rate':str(research_cost_rate),
-        #                                          'NetInterestRate': str(NetInterestRate),'SGA_Rate':str(SGA_Rate),
-        #                                          'costOfRevenue_Rate': str(costOfRevenue_Rate),'interest_Rate':str(interest_Rate),
-        #                                          'Earnings_per_share':str(Earnings_per_share),'Fstatus':'1'}, {'ic_id': ic_id})
+        lib.dbU.update('income_statement_data', {'GrossProfitMargin': str(GrossProfitMargin),'research_cost_rate':str(research_cost_rate),
+                                                 'NetInterestRate': str(NetInterestRate),'SGA_Rate':str(SGA_Rate),
+                                                 'costOfRevenue_Rate': str(costOfRevenue_Rate),'interest_Rate':str(interest_Rate),
+                                                 'Earnings_per_share':str(Earnings_per_share),'Fstatus':'1'}, {'ic_id': ic_id})
