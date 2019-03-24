@@ -34,7 +34,8 @@ def update_iterate(symbol_list):
             # time.sleep(random.randint(1,3))
     print ('---task completed---')
 
-# res=lib.dbU.select('stock_basic_info',['stock_symbol','stock_name'],[['stock_status','=',"'c'"],['stock_name','=',"''"]],[])
-res=lib.dbU.select('stock_basic_info',['stock_symbol'],[['hasReport','=','1'],['market_capital','=','0'],['fid%3','=','2']],[])
+res=lib.dbU.select('stock_basic_info',['stock_symbol','stock_name'],[['stock_status','=',"'c'"],['stock_name','=',"''"]],[])
+# res=lib.dbU.select('stock_basic_info',['stock_symbol'],[['fid','=','21624']],[])
+# res=lib.dbU.select('stock_basic_info',['stock_symbol'],[['hasReport','=','1'],['market_capital','=','0'],['fid%3','=','2']],[])
 print (len(res))
 update_iterate(res)

@@ -235,5 +235,21 @@ import asyncio
 #     for x in i:
 #         o[x] = i[x]
 #     xx.append(o)
-print (isinstance(99, int))
-print (round(0*100, 4))
+# print (isinstance(99, int))
+# print (round(0*100, 4))
+def getDivided (a,b):
+    a = a if isinstance(a, float) else float(a)
+    b = b if isinstance(b, float) else float(b)
+    if a == 0 or b == 0:
+        return 0
+    else:
+        return a / b
+
+def getRate (a,b):
+    return round(getDivided(a,b)*100, 8)
+low=126.84999847412
+high=134.16000366211
+open=127.02999877930
+print (getRate(high-open,open))
+print (getRate(open-low,open))
+print (open-low)

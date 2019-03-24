@@ -15,3 +15,26 @@ from income_statement_data LEFT JOIN balance_sheet_data on income_statement_data
  where income_statement_data.Fmark=1 and balance_sheet_data.Fmark=2 GROUP BY stock_symbol;
 
  select stock_symbol,totalAssets,totalLiab,otherCurrentAssets,otherAssets,totalCurrentAssets, netTangibleAssets,intangibleAssets,totalStockholderEquity,otherStockholderEquity,longTermInvestments,treasuryStock,  longTermDebt from balance_sheet_data where report_type='a' and stock_symbol IN ('FB','V') and report_year=2018
+
+ SELECT month_price_2018.stock_symbol, month_price_2019.m3 as m93,month_price_2018.m3 as m83, month_price_2015.m3 as m53 , income_statement_data.NetInterestRate, balance_sheet_data.debtRatio,balance_sheet_data.current_ratio
+ FROM `month_price_2018`,month_price_2019,month_price_2015,stock_basic_info, income_statement_data,balance_sheet_data
+where month_price_2018.m3 > (month_price_2015.m3*3) and
+month_price_2018.stock_symbol=month_price_2015.stock_symbol
+and month_price_2018.stock_symbol=month_price_2019.stock_symbol
+and month_price_2015.price_type='close'
+and month_price_2019.price_type='close'
+and month_price_2018.price_type='close'
+and month_price_2018.m3>1
+and month_price_2018.stock_symbol = stock_basic_info.stock_symbol
+and stock_basic_info.hasReport=1
+and month_price_2015.m3>1
+and income_statement_data.stock_symbol = month_price_2018.stock_symbol
+and income_statement_data.report_type='a'
+and income_statement_data.report_year=2018
+and balance_sheet_data.stock_symbol = month_price_2018.stock_symbol
+and balance_sheet_data.report_type='a'
+and balance_sheet_data.report_year=2018
+and income_statement_data.netIncome>0
+and stock_basic_info.up2015to2018=1
+and (balance_sheet_data.debtRatio <50 or current_ratio>100)
+and month_price_2019.m3 >=(month_price_2018.m3*0.8);

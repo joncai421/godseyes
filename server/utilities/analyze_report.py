@@ -4,8 +4,8 @@ import requests
 import random
 
 def getDivided (a,b):
-    a = a if isinstance(a, int) else int(a)
-    b = b if isinstance(b, int) else int(b)
+    a = a if isinstance(a, float) else float(a)
+    b = b if isinstance(b, float) else float(b)
     if a == 0 or b == 0:
         return 0
     else:

@@ -125,7 +125,7 @@ def update_iterate(symbol_list):
             # print (r)
         # time.sleep(random.randint(2, 5))
     print ('---task completed---, check for new data...')
-    fill_month_price_data(2)
+    # fill_month_price_data(2)
 
 # type: #1:all,2:active
 def fill_month_price_data(type):
