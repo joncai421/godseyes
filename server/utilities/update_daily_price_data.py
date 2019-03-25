@@ -71,7 +71,7 @@ def insert_daily_price_table(symbol,raw_data):
 def get_d_price_data(symbol):
     print ('filling starting for symbol:'+symbol)
     try:
-        url = 'https://query2.finance.yahoo.com/v8/finance/chart/'+symbol+'?formatted=true&crumb=qzKRwVIK1az&lang=en-US&region=US&period1=1262275200&period2=1553616000&interval=1d&events=div%7Csplit&corsDomain=finance.yahoo.com'
+        url = 'https://query2.finance.yahoo.com/v8/finance/chart/'+symbol+'?formatted=true&crumb=qzKRwVIK1az&lang=en-US&region=US&period1=1262275200&period2=1561564800&interval=1d&events=div%7Csplit&corsDomain=finance.yahoo.com'
         # print ('request url:' + url)
         result = requests.get(url)
         # print (result)
@@ -99,7 +99,11 @@ def update_iterate(symbol_list):
     # fill_daily_price_data()
 
 def fill_daily_price_data():
-    condition = [['has_daily_price','=','0'],['stock_status','=',"'c'"]]
+    condition = [['fid','=',"21625"]]
+    # condition = [['has_month_price','=',"1"],['has_daily_price','!=','1']]
+    # condition = [['stock_status','=',"'c'"],['has_daily_price','!=','1']]
+    # condition = [['has_daily_price','!=','1'],['fid%3','=','1']]
+    # condition = [['has_daily_price','!=','1']]
 
     symbol_list = get_symbols(condition)
     print (str(len(symbol_list))+' stock to fill data')

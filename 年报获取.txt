@@ -21,11 +21,11 @@ https://query2.finance.yahoo.com/v7/finance/quote?formatted=true&crumb=qzKRwVIK1
 
 get historical data from yahoo:
 month:
-https://query2.finance.yahoo.com/v8/finance/chart/AAPL?formatted=true&crumb=qzKRwVIK1az&lang=en-US&region=US&period1=915120000&period2=1553616000&interval=1mo&events=div%7Csplit&corsDomain=finance.yahoo.com
+https://query2.finance.yahoo.com/v8/finance/chart/AAPL?formatted=true&crumb=qzKRwVIK1az&lang=en-US&region=US&period1=915120000&period2=1561564800&interval=1mo&events=div%7Csplit&corsDomain=finance.yahoo.com
 daily:
-https://query2.finance.yahoo.com/v8/finance/chart/AAPL?formatted=true&crumb=qzKRwVIK1az&lang=en-US&region=US&period1=1262275200&period2=1553616000&interval=1d&events=div%7Csplit&corsDomain=finance.yahoo.com
+https://query2.finance.yahoo.com/v8/finance/chart/AAPL?formatted=true&crumb=qzKRwVIK1az&lang=en-US&region=US&period1=1262275200&period2=1561564800&interval=1d&events=div%7Csplit&corsDomain=finance.yahoo.com
 
-https://finance.yahoo.com/quote/AAPL/history?period1=915120000&period2=1553616000&interval=1mo&filter=history&frequency=1mo
+https://finance.yahoo.com/quote/AAPL/history?period1=915120000&period2=1561564800&interval=1mo&filter=history&frequency=1mo
 
 
 day:

@@ -100,7 +100,7 @@ def get_m_price_data(symbol):
     # print (1111222)
     print ('filling starting for symbol:'+symbol)
     try:
-        url = 'https://query2.finance.yahoo.com/v8/finance/chart/'+symbol+'?formatted=true&crumb=qzKRwVIK1az&lang=en-US&region=US&period1=883584000&period2=1648310400&interval=1mo&events=div%7Csplit&corsDomain=finance.yahoo.com'
+        url = 'https://query2.finance.yahoo.com/v8/finance/chart/'+symbol+'?formatted=true&crumb=qzKRwVIK1az&lang=en-US&region=US&period1=883584000&period2=1561564800&interval=1mo&events=div%7Csplit&corsDomain=finance.yahoo.com'
         # print ('request url:' + url)
         result = requests.get(url)
         # print (result)

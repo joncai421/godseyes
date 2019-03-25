@@ -1,6 +1,7 @@
 import utilities.update_shock_table as ust
 import utilities.update_month_price_data as umpd
 import utilities.update_daily_price_data as udpd
+import utilities.update_latest_daily_price_data as uldpd
 import utilities.getReport as gr
 import utilities.analyze_report as ar
 import sys
@@ -26,5 +27,8 @@ elif sys.argv[1] == '7':
     print ('---income sheet data analyze update---')
     ar.update_analyze_income_sheet()
 elif sys.argv[1] == '8':
-    print ('---update_daily_price_data:for all stock---')
+    print ('---update_daily_price_data:for all stock---')#insert all daily historical data
     udpd.fill_daily_price_data()
+elif sys.argv[1] == '9':
+    print ('---update_daily_price_data:for all stock---')#update all daily historical data
+    uldpd.fill_daily_price_data()
