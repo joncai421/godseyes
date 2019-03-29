@@ -237,19 +237,37 @@ import asyncio
 #     xx.append(o)
 # print (isinstance(99, int))
 # print (round(0*100, 4))
-def getDivided (a,b):
-    a = a if isinstance(a, float) else float(a)
-    b = b if isinstance(b, float) else float(b)
-    if a == 0 or b == 0:
-        return 0
-    else:
-        return a / b
+# def getDivided (a,b):
+#     a = a if isinstance(a, float) else float(a)
+#     b = b if isinstance(b, float) else float(b)
+#     if a == 0 or b == 0:
+#         return 0
+#     else:
+#         return a / b
+#
+# def getRate (a,b):
+#     return round(getDivided(a,b)*100, 8)
+# low=126.84999847412
+# high=134.16000366211
+# open=127.02999877930
+# print (getRate(high-open,open))
+# print (getRate(open-low,open))
+# print (open-low)
 
-def getRate (a,b):
-    return round(getDivided(a,b)*100, 8)
-low=126.84999847412
-high=134.16000366211
-open=127.02999877930
-print (getRate(high-open,open))
-print (getRate(open-low,open))
-print (open-low)
+# import datetime
+#
+# d = datetime.datetime(2009, 2, 1)
+# d3= datetime.date.strftime(d - datetime.timedelta(1), '%Y-%m-%d')
+# print (d3)
+# print ((d - datetime.timedelta(1)).day)
+# print ((d - datetime.timedelta(1)).month)
+
+# mylist = [3,1,2,3,4,53,3,4,2,4,24,343,1,3,4,4,4,4,4]
+# a = list(dict.fromkeys(mylist))
+# a.sort()
+# print(a)
+
+# from calendar import monthrange
+# print (monthrange(2019, 2)[1])
+for i in range(2, 13):
+    print (i)
