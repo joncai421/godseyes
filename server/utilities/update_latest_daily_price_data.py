@@ -6,7 +6,8 @@ import requests
 from_year = 2019
 to_year = 2021
 from_month = 3
-from_date = 22
+from_date = 23
+special_symbol = ['DJI']
 
 def getDivided (a,b):
     a = a if isinstance(a, float) else float(a)
@@ -54,9 +55,9 @@ def insert_daily_price_table(symbol,raw_data):
     timestamp = raw_data['chart']['result'][0]['timestamp']
 
     adjclose = raw_data['chart']['result'][0]['indicators']['adjclose'][0]['adjclose']
-    length = len(timestamp)
+    length = int(len(timestamp))
     insert_map = {}
-    for index in range(length):
+    for index in range(0,length):
         timeObj = lib.tools.timestamp_to_datetime(timestamp[index])
         year = timeObj['year']
         month = timeObj['month']
@@ -66,8 +67,10 @@ def insert_daily_price_table(symbol,raw_data):
             if table_name not in insert_map:
                 insert_map[table_name] = []
             insert_data = {"stock_symbol": symbol}
-            for p_type in raw_data['chart']['result'][0]['indicators']['quote'][0]:
-                insert_data['Pri_'+p_type] = raw_data['chart']['result'][0]['indicators']['quote'][0][p_type][index] or 0
+            p_data = raw_data['chart']['result'][0]['indicators']['quote'][0]
+            for p_type in p_data:
+                insert_data['Pri_' + p_type] = p_data[p_type][index] or 0
+
             adjc = adjclose[index] or 0
             insert_data['Pmonth'] = month
             insert_data['Pdate'] = date
@@ -94,6 +97,7 @@ def insert_daily_price_table(symbol,raw_data):
             last_close.append(raw_data['chart']['result'][0]['indicators']['quote'][0]['close'][index] or 0
                               )
     for year_tables in insert_map:
+       print (year_tables)
        lib.dbU.insert(year_tables, insert_map[year_tables])
         # print (year_tables+':')
     # print ('insert completed for symbol:' + symbol+',updating has_daily_price status..')
@@ -102,14 +106,18 @@ def insert_daily_price_table(symbol,raw_data):
 
 def get_d_price_data(symbol):
     print ('filling starting for symbol:'+symbol)
+    global special_symbol
     try:
-        url = 'https://query2.finance.yahoo.com/v8/finance/chart/'+symbol+'?formatted=true&crumb=qzKRwVIK1az&lang=en-US&region=US&period1=1553011200&period2=1640793600&interval=1d&events=div%7Csplit&corsDomain=finance.yahoo.com'
-        # print ('request url:' + url)
+        if symbol in special_symbol:
+            url = 'https://query2.finance.yahoo.com/v8/finance/chart/%5E'+symbol+'?formatted=true&crumb=qzKRwVIK1az&lang=en-US&region=US&period1=1262275200&period2=1561564800&interval=1d&events=div%7Csplit&corsDomain=finance.yahoo.com'
+        else:
+            url = 'https://query2.finance.yahoo.com/v8/finance/chart/' + symbol + '?formatted=true&crumb=qzKRwVIK1az&lang=en-US&region=US&period1=1262275200&period2=1561564800&interval=1d&events=div%7Csplit&corsDomain=finance.yahoo.com'
+        print ('request url:' + url)
         result = requests.get(url)
-        # print (result)
+        # print (result.json())
         return result.json()
     except:
-       return {'chart':{'result':None}}
+        return {'chart':{'result':None}}
 
 def get_symbols (condition):
     res = lib.dbU.select('stock_basic_info',['stock_symbol','cik'],condition,[])
@@ -142,7 +150,7 @@ def fill_daily_price_data():
     print (str(len(symbol_list))+' stock to fill data')
 
     if int(len(symbol_list))>0:
-        # update_iterate([['V']])
+        # update_iterate([['TME']])
         update_iterate(symbol_list)
     else:
         print ('---task completed---')

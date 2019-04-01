@@ -5,6 +5,7 @@ import random
 import requests
 from_year = 2010
 to_year = 2019
+special_symbol = ['DJI']
 
 def getDivided (a,b):
     a = a if isinstance(a, float) else float(a)
@@ -69,9 +70,13 @@ def insert_daily_price_table(symbol,raw_data):
 
 
 def get_d_price_data(symbol):
+    global special_symbol
     print ('filling starting for symbol:'+symbol)
     try:
-        url = 'https://query2.finance.yahoo.com/v8/finance/chart/'+symbol+'?formatted=true&crumb=qzKRwVIK1az&lang=en-US&region=US&period1=1262275200&period2=1561564800&interval=1d&events=div%7Csplit&corsDomain=finance.yahoo.com'
+        if symbol in special_symbol:
+            url = 'https://query2.finance.yahoo.com/v8/finance/chart/%5E' + symbol + '?formatted=true&crumb=qzKRwVIK1az&lang=en-US&region=US&period1=1262275200&period2=1561564800&interval=1d&events=div%7Csplit&corsDomain=finance.yahoo.com'
+        else:
+            url = 'https://query2.finance.yahoo.com/v8/finance/chart/' + symbol + '?formatted=true&crumb=qzKRwVIK1az&lang=en-US&region=US&period1=1262275200&period2=1561564800&interval=1d&events=div%7Csplit&corsDomain=finance.yahoo.com'
         # print ('request url:' + url)
         result = requests.get(url)
         # print (result)

@@ -8,6 +8,8 @@ import utilities.find_go_up as fgu
 import utilities.getReport as gr
 import utilities.analyze_report as ar
 import utilities.count_avg_volume as cag
+import utilities.update_amplitude as ua
+import utilities.update_latest_month_price_data as ulm
 import sys
 if sys.argv[1] == '1':
     print ('---fill_shock_basic_info---')
@@ -54,3 +56,9 @@ elif sys.argv[1] == '14':
 elif sys.argv[1] == '15':
     print ('---count_avg_volume---')
     cag.volume_to_avg_rate(sys.argv[2])
+elif sys.argv[1] == '16':
+    print ('---uaupdate_amplitude_for_symbol---')
+    ua.update_amplitude_for_symbol(sys.argv[2],sys.argv[3])
+elif sys.argv[1] == '17':
+    print ('---update_latest_month_price_data---')
+    ulm.fill_month_price_data()

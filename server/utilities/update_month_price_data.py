@@ -5,6 +5,7 @@ import random
 import requests
 from_year = 1997
 to_year = 2019
+special_symbol = ['DJI']
 
 def insert_month_price_table(symbol,raw_data):
     global from_year
@@ -100,7 +101,11 @@ def get_m_price_data(symbol):
     # print (1111222)
     print ('filling starting for symbol:'+symbol)
     try:
-        url = 'https://query2.finance.yahoo.com/v8/finance/chart/'+symbol+'?formatted=true&crumb=qzKRwVIK1az&lang=en-US&region=US&period1=883584000&period2=1561564800&interval=1mo&events=div%7Csplit&corsDomain=finance.yahoo.com'
+        if symbol in special_symbol:
+            url = 'https://query2.finance.yahoo.com/v8/finance/chart/%5E' + symbol + '?formatted=true&crumb=qzKRwVIK1az&lang=en-US&region=US&period1=883584000&period2=1561564800&interval=1mo&events=div%7Csplit&corsDomain=finance.yahoo.com'
+        else:
+            url = 'https://query2.finance.yahoo.com/v8/finance/chart/'+symbol+'?formatted=true&crumb=qzKRwVIK1az&lang=en-US&region=US&period1=883584000&period2=1561564800&interval=1mo&events=div%7Csplit&corsDomain=finance.yahoo.com'
+
         # print ('request url:' + url)
         result = requests.get(url)
         # print (result)
@@ -136,7 +141,7 @@ def fill_month_price_data(type):
     print (str(len(symbol_list))+' stock to fill data')
 
     if int(len(symbol_list))>0:
-        # update_iterate([['CLI'],['CLM'],['CLMS'],['CLMT'],['CLNE'],['CLNW']])
+        # update_iterate([['DJI']])
         update_iterate(symbol_list)
     else:
         print ('---task completed---')

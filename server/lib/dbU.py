@@ -129,8 +129,8 @@ def select (mainTable, selectFields, conditions, fromCondition):
         cursor.execute(query)
         result = cursor.fetchall()
         return result
-    except e:
+    except:
         print ('there is a fucking error!')
-        return ''
+        return []
     connection.close()
 
