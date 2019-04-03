@@ -62,3 +62,6 @@ elif sys.argv[1] == '16':
 elif sys.argv[1] == '17':
     print ('---update_latest_month_price_data---')
     ulm.fill_month_price_data()
+elif sys.argv[1] == '18':
+    print ('---get_predict_by_volume---')
+    find_pred.get_predict_by_volume(sys.argv[2],sys.argv[3],sys.argv[4])

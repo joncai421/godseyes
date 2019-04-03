@@ -65,32 +65,38 @@ def get_predict_for_symbol(result_year, reverse_to_symbol, type):
 
 # ---------predict by previous day volume---------------------
 
-def get_trend_from_symbol_for_volume(result_year, ref_to_symbol):
+def get_trend_from_symbol_for_volume(result_year, ref_to_symbol, type):
     trend = []
-    res = lib.dbU.select('daily_price_'+result_year, ['diff_rate','Pmonth','Pdate'], [['stock_symbol','=',"'"+reverse_to_symbol+"'"]], [])
+    trade_days = []
+    trade_months = []
+    index = 0
+    res = lib.dbU.select('daily_price_'+result_year, ['diff_rate','Pmonth','Pdate'], [['stock_symbol','=',"'"+ref_to_symbol+"'"]], [])
     for r in res:
         diff_rate = float(r[0])
         Pmonth = int(r[1])
         Pdate = int(r[2])
+        trade_months.append(Pmonth)
+        trade_days.append(Pdate)
         d = datetime.datetime(int(result_year), Pmonth, Pdate)
         # prev_date = datetime.date.strftime(date - datetime.timedelta(1), '%Y-%m-%d')
-        prev_date = str((d - datetime.timedelta(1)).day)
-        prev_month = str((d - datetime.timedelta(1)).month)
-        trend1 = '<=' if type =='rev' else '>='
-        trend2 = '>=' if type =='rev' else '<='
+        prev_date = trade_days[index-1] if index-1 in trade_days else str((d - datetime.timedelta(1)).day)
+        prev_month = trade_months[index-1] if index-1 in trade_months else str((d - datetime.timedelta(1)).month)
+        # trend1 = '<=' if type =='rev' else '>='
+        # trend2 = '>=' if type =='rev' else '<='
         if diff_rate>=0.1:
-            trend.append({'t':trend1,'m':prev_month,'d':prev_date,'p':'-0.1'})
+            trend.append({'t':'>=','m':prev_month,'d':prev_date,'p':'150'})
         elif diff_rate<=-0.1:
-            trend.append({'t':trend2,'m':prev_month,'d':prev_date,'p':'0.1'})
+            trend.append({'t':'>=','m':prev_month,'d':prev_date,'p':'150'})
+        index+=1
     return trend
 
-def get_predict_by_volume(result_year, ref_to_symbol):
+def get_predict_by_volume(result_year, ref_to_symbol, type):
     reverse_map = {}
     result_map = {}
-    trend = get_trend_from_symbol_for_volume(result_year, reverse_to_symbol, type)
+    trend = get_trend_from_symbol_for_volume(result_year, ref_to_symbol, type)
     trend_number = int(len(trend))
     for tr in trend:
-        res = lib.dbU.select('daily_price_' + result_year, ['stock_symbol'],[['diff_rate', tr['t'], tr['p']],['Pmonth','=',tr['m']],['Pdate','=',tr['d']]], [])
+        res = lib.dbU.select('daily_price_' + str(result_year), ['stock_symbol'],[['volume_to_avg_rate', tr['t'], tr['p']],['Pmonth','=',str(tr['m'])],['Pdate','=',str(tr['d'])]], [])
         for r in res:
             symbol = r[0]
             if symbol not in reverse_map:
@@ -113,6 +119,6 @@ def get_predict_by_volume(result_year, ref_to_symbol):
     print ('trend_number:'+str(trend_number))
     print ('type:'+type)
     print ('result_year:'+result_year)
-    print ('reverse_to_symbol:'+reverse_to_symbol)
+    print ('ref_to_symbol:'+ref_to_symbol)
 
 
