@@ -5,8 +5,8 @@ import random
 import requests
 from_year = 2019
 to_year = 2021
-from_month = 3
-from_date = 23
+from_month = 4
+from_date = 15
 special_symbol = ['DJI']
 
 def getDivided (a,b):
@@ -45,7 +45,10 @@ def is_last_date (year, month, date):
     global to_year
     global from_month
     global from_date
-    if from_year == int(year) and from_month == int(month) and from_date == int(date)+1:
+    d = datetime.datetime(from_year, from_month, from_date)
+    if d.weekday()==0 and from_year == int(year) and from_month == int(month) and from_date == int(date)+3:
+        return True
+    elif from_year == int(year) and from_month == int(month) and from_date == int(date)+1:
         return True
     else:
         return False;

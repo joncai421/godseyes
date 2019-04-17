@@ -1,11 +1,14 @@
 import utilities.update_shock_table as ust
 import utilities.update_month_price_data as umpd
+import utilities.update_month_price_data_hk as umpd_hk
 import utilities.update_daily_price_data as udpd
+import utilities.update_daily_price_data_hk as udpd_hk
 import utilities.update_latest_daily_price_data as uldpd
 import utilities.find_reverse as find_rev
 import utilities.find_predict as find_pred
 import utilities.find_go_up as fgu
 import utilities.getReport as gr
+import utilities.getReport_hk as gr_hk
 import utilities.analyze_report as ar
 import utilities.count_avg_volume as cag
 import utilities.update_amplitude as ua
@@ -65,3 +68,12 @@ elif sys.argv[1] == '17':
 elif sys.argv[1] == '18':
     print ('---get_predict_by_volume---')
     find_pred.get_predict_by_volume(sys.argv[2],sys.argv[3],sys.argv[4])
+elif sys.argv[1] == '19':
+    print ('---get report:for active stock HK---')
+    gr_hk.getReport()
+elif sys.argv[1] == '20':
+    print ('---update_daily_price_data:for all stock HK---')#insert all daily historical data
+    udpd_hk.fill_daily_price_data()
+elif sys.argv[1] == '21':
+    print ('---fill_month_price_data:for all stock HK---')
+    umpd_hk.fill_month_price_data()#update for all stock HK

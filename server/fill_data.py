@@ -6,6 +6,7 @@ import random
 def get_stock_info(symbol):
     try:
         url = 'https://query2.finance.yahoo.com/v7/finance/quote?formatted=true&crumb=qzKRwVIK1az&lang=en-US&region=US&symbols='+symbol
+        url = 'query1.finance.yahoo.com/v8/finance/chart/0700.HK?formatted=true&crumb=alaFMER.cN8&lang=zh-Hant-HK&region=HK&period1=1460736000&period2=1555344000&interval=1d&events=div%7Csplit&corsDomain=hk.finance.yahoo.com'
         print ('request url:' + url)
         # result = requests.get(url).json()
         result = requests.get(url, timeout=100).json()

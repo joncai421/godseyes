@@ -99,6 +99,7 @@ def insert_month_price_table(symbol,raw_data):
 
 def get_m_price_data(symbol):
     # print (1111222)
+    global special_symbol
     print ('filling starting for symbol:'+symbol)
     try:
         if symbol in special_symbol:

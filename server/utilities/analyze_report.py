@@ -35,7 +35,7 @@ def update_analyze_cash_sheet():
        ],[
         ['balance_sheet_data', 'cash_flow_data.stock_symbol', '=', 'balance_sheet_data.stock_symbol'],
         ['income_statement_data','cash_flow_data.stock_symbol', '=', 'income_statement_data.stock_symbol'],
-    ])
+    ], db='hk')
 
     for index in range(len(res)):
         symbol = res[index][0]
@@ -50,7 +50,7 @@ def update_analyze_cash_sheet():
         capitalExpenditures_rate2 = getRate(capitalExpenditures-abs(repurchaseOfStock),netIncome)
         repurchaseOfStock_rate = getRate(abs(repurchaseOfStock),netIncome)
         print ('update_iterate :' + symbol + ',index:' + str(index + 1) + ' of ' + str(len(res)))
-        lib.dbU.update('cash_flow_data', {'repurchaseOfStock_rate':repurchaseOfStock_rate,'capitalExpenditures_rate2':capitalExpenditures_rate2,'depreciation_rate': str(depreciation_rate),'capitalExpenditures_rate':str(capitalExpenditures_rate),'Fstatus':'1'}, {'cid': cid})
+        lib.dbU.update('cash_flow_data', {'repurchaseOfStock_rate':repurchaseOfStock_rate,'capitalExpenditures_rate2':capitalExpenditures_rate2,'depreciation_rate': str(depreciation_rate),'capitalExpenditures_rate':str(capitalExpenditures_rate),'Fstatus':'1'}, {'cid': cid}, db='hk')
 
 def update_analyze_balance_sheet():
     res = lib.dbU.select('balance_sheet_data',[
@@ -71,7 +71,7 @@ def update_analyze_balance_sheet():
         ['balance_sheet_data.Fstatus', '=', '0'],
     ],[
         ['income_statement_data', 'income_statement_data.stock_symbol', '=', 'balance_sheet_data.stock_symbol'],
-    ])
+    ], db='hk')
 
     for index in range(len(res)):
         symbol = res[index][0]
@@ -91,7 +91,7 @@ def update_analyze_balance_sheet():
         retainedEarnings_rate = getRate(retainedEarnings,netIncome)
 
         print ('update_iterate :' + symbol + ',index:' + str(index + 1) + ' of ' + str(len(res)))
-        lib.dbU.update('balance_sheet_data', {'debtRatio': str(debtRatio),'receivables_rate':str(receivables_rate),'current_ratio':str(current_ratio),'total_debt_to_equity_ratio':str(total_debt_to_equity_ratio),'retainedEarnings_rate':retainedEarnings_rate,'Fstatus':'1'}, {'bid': bid})
+        lib.dbU.update('balance_sheet_data', {'debtRatio': str(debtRatio),'receivables_rate':str(receivables_rate),'current_ratio':str(current_ratio),'total_debt_to_equity_ratio':str(total_debt_to_equity_ratio),'retainedEarnings_rate':retainedEarnings_rate,'Fstatus':'1'}, {'bid': bid}, db='hk')
 
 def update_analyze_income_sheet():
     res = lib.dbU.select('income_statement_data',[
@@ -109,7 +109,7 @@ def update_analyze_income_sheet():
         ['income_statement_data.Fstatus','=','0'],
        ],[
         ['stock_basic_info', 'income_statement_data.stock_symbol', '=', 'stock_basic_info.stock_symbol'],
-    ])
+    ], db='hk')
 
     for index in range(len(res)):
         symbol = res[index][0]
@@ -133,4 +133,4 @@ def update_analyze_income_sheet():
         lib.dbU.update('income_statement_data', {'GrossProfitMargin': str(GrossProfitMargin),'research_cost_rate':str(research_cost_rate),
                                                  'NetInterestRate': str(NetInterestRate),'SGA_Rate':str(SGA_Rate),
                                                  'costOfRevenue_Rate': str(costOfRevenue_Rate),'interest_Rate':str(interest_Rate),
-                                                 'Earnings_per_share':str(Earnings_per_share),'Fstatus':'1'}, {'ic_id': ic_id})
+                                                 'Earnings_per_share':str(Earnings_per_share),'Fstatus':'1'}, {'ic_id': ic_id}, db='hk')

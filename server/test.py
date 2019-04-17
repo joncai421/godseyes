@@ -269,5 +269,19 @@ import asyncio
 
 # from calendar import monthrange
 # print (monthrange(2019, 2)[1])
-for i in range(2, 13):
-    print (i)
+# def myfunc(a, b, **options):
+#     print (a)
+#     print (b)
+#     # for i in args:
+#     #     print (i)
+#     c = options.get('c', None)
+#     d = options.get('d', None)
+#     e = d or 'e'
+#     print (c)
+#     print (e)
+#
+#
+# myfunc(1, 2, c='nick',d='dd')
+import datetime
+d = datetime.datetime(2019, 4, 21)
+print (d.weekday())

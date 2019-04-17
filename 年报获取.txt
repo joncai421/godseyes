@@ -1,10 +1,15 @@
-sina:(best so far for hk)
-http://stock.finance.sina.com.cn/hkstock/finance/00700.html
-http://quotes.sina.com.cn/usstock/hq/balance.php?s=AAPL
+--------------hk market-------------------------
+get historical data from yahoo:
+basic info:
+query1.finance.yahoo.com/v7/finance/quote?formatted=true&crumb=alaFMER.cN8&lang=zh-Hant-HK&region=HK&symbols=0700.HK&fields=messageBoardId%2ClongName%2CshortName%2CmarketCap%2CunderlyingSymbol%2CunderlyingExchangeSymbol%2CheadSymbolAsString%2CregularMarketPrice%2CregularMarketChange%2CregularMarketChangePercent%2CregularMarketVolume%2Cuuid%2CregularMarketOpen%2CfiftyTwoWeekLow%2CfiftyTwoWeekHigh&corsDomain=hk.finance.yahoo.com
+daily:
+query1.finance.yahoo.com/v8/finance/chart/0700.HK?formatted=true&crumb=alaFMER.cN8&lang=zh-Hant-HK&region=HK&period1=1460736000&period2=1555344000&interval=1d&events=div%7Csplit&corsDomain=hk.finance.yahoo.com
+monthly:
+query1.finance.yahoo.com//v8/finance/chart/0700.HK?formatted=true&crumb=alaFMER.cN8&lang=zh-Hant-HK&region=HK&period1=1460736000&period2=1555344000&interval=1mo&events=div%7Csplit&corsDomain=hk.finance.yahoo.com
+report page:
+https://hk.finance.yahoo.com/quote/0700.HK/financials?p=0700.HK
 
-
-
-
+--------------us market-------------------------
 msn:
 https://www.msn.com/en-us/money/stockdetails/financials/fi-126.1.AAPL.NAS
 

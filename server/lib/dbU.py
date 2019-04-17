@@ -10,8 +10,9 @@ example of invoking:
 insert('table_name',{'a':1,'b':2,'c':3})
 insert('c_table',[{'a':1,'b':2,'c':3},{'a':4,'b':5,'c':6}])
 '''
-def insert (table, insertObj):
-    connection = pymysql.connect(host ="localhost", user ="j", passwd ="123QWEasd", db="wallstreet", charset='utf8',port=3306 )
+def insert (table, insertObj, **options):
+    db = options.get('db', None) or "wallstreet"
+    connection = pymysql.connect(host ="localhost", user ="j", passwd ="123QWEasd", db=db, charset='utf8',port=3306 )
     cursor = connection.cursor()
     fields = []
     values = []
@@ -47,8 +48,8 @@ def insert (table, insertObj):
     try:
         cursor.execute(queryStr)
         connection.commit()
-    except e:
-        print ('there is a fucking error!:'+e)
+    except:
+        print ('there is a fucking error!:')
         connection.rollback()
     connection.close()
 
@@ -59,9 +60,10 @@ example of invoking:
 insert('table_name',{'b':'1','c':'2','d':3},{'a':1})
 insert('table_name',{'c':1,'d':2,'e':3},{'a':1,'b':1})
 '''
-def update (table, dataObj, condiObj):
+def update (table, dataObj, condiObj, **options):
+    db = options.get('db', None) or "wallstreet"
     if len(dataObj)>0 and len(condiObj)>0:
-        connection = pymysql.connect(host="localhost", user="j", passwd="123QWEasd", db="wallstreet", charset='utf8',port=3306)
+        connection = pymysql.connect(host="localhost", user="j", passwd="123QWEasd", db=db, charset='utf8',port=3306)
         cursor = connection.cursor()
         queryStr = "UPDATE `" + table + "` SET  "
         whereCondi = ' WHERE '
@@ -105,8 +107,9 @@ select('stock_basic_info',
        ['*'],[])
        
 '''
-def select (mainTable, selectFields, conditions, fromCondition):
-    connection = pymysql.connect(host="localhost", user="j", passwd="123QWEasd", db="wallstreet", charset='utf8',port=3306)
+def select (mainTable, selectFields, conditions, fromCondition, **options):
+    db = options.get('db', None) or "wallstreet"
+    connection = pymysql.connect(host="localhost", user="j", passwd="123QWEasd", db=db, charset='utf8',port=3306)
     cursor = connection.cursor()
     query = 'SELECT ' + ','.join(selectFields) +' FROM '+mainTable +' '
     if isinstance(fromCondition, str):
