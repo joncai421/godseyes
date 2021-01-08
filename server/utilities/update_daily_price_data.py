@@ -3,8 +3,8 @@ import lib.tools
 import time
 import random
 import requests
-from_year = 2010
-to_year = 2019
+from_year = 1997
+to_year = 2009
 special_symbol = ['DJI']
 
 def getDivided (a,b):
@@ -74,9 +74,9 @@ def get_d_price_data(symbol):
     print ('filling starting for symbol:'+symbol)
     try:
         if symbol in special_symbol:
-            url = 'https://query2.finance.yahoo.com/v8/finance/chart/%5E' + symbol + '?formatted=true&crumb=qzKRwVIK1az&lang=en-US&region=US&period1=1262275200&period2=1561564800&interval=1d&events=div%7Csplit&corsDomain=finance.yahoo.com'
+            url = 'https://query2.finance.yahoo.com/v8/finance/chart/%5E' + symbol + '?formatted=true&crumb=qzKRwVIK1az&lang=en-US&region=US&period1=883584000&period2=1561564800&interval=1d&events=div%7Csplit&corsDomain=finance.yahoo.com'
         else:
-            url = 'https://query2.finance.yahoo.com/v8/finance/chart/' + symbol + '?formatted=true&crumb=qzKRwVIK1az&lang=en-US&region=US&period1=1262275200&period2=1561564800&interval=1d&events=div%7Csplit&corsDomain=finance.yahoo.com'
+            url = 'https://query2.finance.yahoo.com/v8/finance/chart/' + symbol + '?formatted=true&crumb=qzKRwVIK1az&lang=en-US&region=US&period1=883584000&period2=1561564800&interval=1d&events=div%7Csplit&corsDomain=finance.yahoo.com'
         # print ('request url:' + url)
         result = requests.get(url)
         # print (result)
@@ -90,32 +90,49 @@ def get_symbols (condition):
 
 def update_iterate(symbol_list):
     for index in range(len(symbol_list)):
-        print ('update_iterate :' + symbol_list[index][0] + ',index:' + str(index + 1) + ' of ' + str(len(symbol_list)))
-        r = get_d_price_data(symbol_list[index][0])
-        if r['chart']['result'] is not None and len(r['chart']['result'][0])>0 and 'timestamp' in r['chart']['result'][0]:
-            insert_daily_price_table(symbol_list[index][0],r)
-            print (symbol_list[index][0]+' has completed filling, wait for next one...')
+        print ('update_iterate :' + symbol_list[index] + ',index:' + str(index + 1) + ' of ' + str(len(symbol_list)))
+        r = get_d_price_data(symbol_list[index])
+        if 'chart' in r and 'result' in r['chart'] and r['chart']['result'] is not None and len(r['chart']['result'][0])>0 and 'timestamp' in r['chart']['result'][0]:
+            insert_daily_price_table(symbol_list[index],r)
+            print (symbol_list[index]+' has completed filling, wait for next one...')
         else:
-            print (symbol_list[index][0] + ' is empty, wait for next one...')
-            lib.dbU.update('stock_basic_info', {'has_daily_price': '-1'}, {'stock_symbol': symbol_list[index][0]})
+            print (symbol_list[index] + ' is empty, wait for next one...')
+            # lib.dbU.update('stock_basic_info', {'has_daily_price': '-1'}, {'stock_symbol': symbol_list[index]})
             # print (r)
         # time.sleep(random.randint(2, 5))
     print ('---task completed---, check for new data...')
     # fill_daily_price_data()
 
 def fill_daily_price_data():
-    condition = [['fid','=',"21625"]]
+    global from_year
+    global to_year
+    # condition = [['fid','=',"21625"]]
     # condition = [['has_month_price','=',"1"],['has_daily_price','!=','1']]
     # condition = [['stock_status','=',"'c'"],['has_daily_price','!=','1']]
     # condition = [['has_daily_price','!=','1'],['fid%3','=','1']]
-    # condition = [['has_daily_price','!=','1']]
-
+    condition = []
+    existed_symbol_list = []
     symbol_list = get_symbols(condition)
     print (str(len(symbol_list))+' stock to fill data')
 
-    if int(len(symbol_list))>0:
+    for i in range(from_year, to_year+1):
+        s_list = lib.dbU.select('daily_price_' + str(i), ['stock_symbol'], [], [], groupby='stock_symbol')
+        for s in s_list:
+            if s[0] not in existed_symbol_list:
+                existed_symbol_list.append(s[0])
+
+    list_to_insert = []
+    for sl in symbol_list:
+        if sl[0] not in existed_symbol_list:
+            list_to_insert.append(sl[0])
+
+    # print (111)
+    # print (len(symbol_list))
+    # print (len(existed_symbol_list))
+    # print (len(list_to_insert))
+    if int(len(list_to_insert))>0:
         # update_iterate([['V'],['FB'],['TME']])
-        update_iterate(symbol_list)
+        update_iterate(list_to_insert)
     else:
         print ('---task completed---')
 

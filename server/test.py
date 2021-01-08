@@ -44,7 +44,7 @@
 #
 # print(h)
 
-import asyncio
+# import asyncio
 
 # async def main():
 #     print('Hello ...')
@@ -282,6 +282,217 @@ import asyncio
 #
 #
 # myfunc(1, 2, c='nick',d='dd')
-import datetime
-d = datetime.datetime(2019, 4, 21)
-print (d.weekday())
+# import datetime
+# d = datetime.datetime(2019, 4, 21)
+# print (d.weekday())
+# def a(**options):
+#     groupby = options.get('groupby', None) or None
+#     a = options['a'] or None
+#     print (a)
+#
+#     print (type(options))
+#     print (type(options.keys()))
+#     if groupby:
+#         print (111)
+#     else:
+#         print (222)
+# a(groupby='a',a='s')
+
+# a={'a':1,'b':2}
+# c={'c':3}
+# d=a
+# print (a)
+# print (c)
+# print (d)
+# print ('---------')
+# a.update(c)
+# print (a)
+# print (c)
+# print (d)
+
+# def a (s):
+#     if s:
+#         print(1)
+#     elif not s:
+#         print (2)
+# a(False)
+
+# a = {'z':{'z':1, 'b':2, 'w':3}, 'b':{'z':1, 'b':2, 'w':3}, 'w':{'z':1, 'b':2, 'w':3}}
+# l = []
+# for i in a:
+#     l.append([a[i]['z'], a[i]['b'],a[i]['w']])
+# print (l)
+# a=2
+# b=3
+# c=5
+# if a < b < c:
+#     print (1)
+# else:
+#     print (2)
+# import datetime
+# update_from_date = 16
+# update_from_month = 4
+# update_from_year = 2019
+# update_to_date = 9
+# update_to_month = 9
+# update_to_year = 2019
+# special_symbol = ['HSI']
+#
+# def is_valid_time (year, month, date):
+#     global update_from_date
+#     global update_to_date
+#     global update_from_month
+#     global update_to_month
+#     global update_from_year
+#     global update_to_year
+#     from_date = datetime.datetime(update_from_year, update_from_month, update_from_date)
+#     to_date = datetime.datetime(update_to_year, update_to_month, update_to_date)
+#     this_date = datetime.datetime(year, month, date)
+#     if from_date<=this_date<=to_date:
+#         print (11)
+#     else:
+#         print (22)
+#
+# print (is_valid_time(2019,10,9))
+
+# for i in range (5):
+
+# import urllib.request
+# import ssl
+# ssl._create_default_https_context = ssl._create_unverified_context
+#
+# url='https://finance.yahoo.com/quote/ma/financials?p=ma'
+# # url='http://www.baidu.com'
+# response = urllib.request.urlopen(url)
+# result = response.read().decode('utf-8')
+# print(result)
+
+
+
+# from http.cookiejar import MozillaCookieJar
+# import urllib.request
+# import ssl
+# import http.cookiejar
+# cookie =http.cookiejar.MozillaCookieJar
+# cookie2 =http.cookiejar.FileCookieJar('')
+#
+#     # 获取html内容
+# def getHtml(url):
+#     cookieProcessor = urllib.request.HTTPCookieProcessor(cookie)
+#     opener = urllib.request.build_opener(cookieProcessor)
+#     page = opener.open(url)
+#     html = page.read().decode('utf-8')
+#     return html
+#
+#
+# #
+# #
+# # # 创建ssl证书
+# ssl._create_default_https_context = ssl._create_unverified_context
+# url = "https://finance.yahoo.com/quote/v/financials?p=v"
+# html = getHtml(url)
+# print(html)
+
+# def trans_type(i):
+#     if isinstance(i, float):
+#         return i
+#     elif isinstance(i, str):
+#         return 0
+#     else:
+#         return float(i)
+#
+# def getDivided (a,b):
+#     a = trans_type(a)
+#     b = trans_type(b)
+#     if a == 0 or b == 0:
+#         return 0
+#     else:
+#         return a / b
+#
+# print(getDivided('a','b'))
+
+# a={
+#             'PretaxIncome': 'incomeBeforeTax',
+#             'Ebitda': 'Ebitda',
+#             'DilutedAverageShares': 'WASO_diluted',
+#             'InterestExpense': 'interestExpense',
+#             'BasicAverageShares': 'WASO',
+#             'TaxProvision': 'incomeTaxExpense',
+#             'OtherIncomeExpense': 'totalOtherIncomeExpenseNet',
+#             'OperatingIncome': 'operatingIncome',
+#             'NetIncomeCommonStockholders': 'netIncomeApplicableToCommonShares',
+#             'DilutedEPS': 'Earnings_per_share_diluted',
+#             'OperatingExpense': 'totalOperatingExpenses',
+#             'SellingGeneralAndAdministration': 'sellingGeneralAdministrative',
+#             'GrossProfit': 'grossProfit',
+#             'CostOfRevenue': 'costOfRevenue',
+#             'TotalRevenue': 'totalRevenue',
+#             'NetIncomeContinuousOperations': 'netIncomeFromContinuingOps',
+#             'NetIncome': 'netIncome',
+#             'BasicEPS': 'Earnings_per_share',
+#             'ResearchAndDevelopment': 'researchDevelopment'
+#         }
+# for i in a:
+#     print(i)
+# b=[{'a':4},5]
+# for o in b:
+#     print(o)
+# c='annualEbitda'
+# print(c.replace('annual',''))
+#
+# url = 'https://query1.finance.yahoo.com/ws/fundamentals-timeseries/v1/finance/premium/timeseries/V?lang=en-US&region=US&symbol=V&padTimeSeries=true&type=annualTotalAssets%2CtrailingTotalAssets%2CannualStockholdersEquity%2CtrailingStockholdersEquity%2CannualGainsLossesNotAffectingRetainedEarnings%2CtrailingGainsLossesNotAffectingRetainedEarnings%2CannualRetainedEarnings%2CtrailingRetainedEarnings%2CannualCapitalStock%2CtrailingCapitalStock%2CannualTotalLiabilitiesNetMinorityInterest%2CtrailingTotalLiabilitiesNetMinorityInterest%2CannualTotalNonCurrentLiabilitiesNetMinorityInterest%2CtrailingTotalNonCurrentLiabilitiesNetMinorityInterest%2CannualOtherNonCurrentLiabilities%2CtrailingOtherNonCurrentLiabilities%2CannualNonCurrentDeferredRevenue%2CtrailingNonCurrentDeferredRevenue%2CannualNonCurrentDeferredTaxesLiabilities%2CtrailingNonCurrentDeferredTaxesLiabilities%2CannualLongTermDebt%2CtrailingLongTermDebt%2CannualCurrentLiabilities%2CtrailingCurrentLiabilities%2CannualOtherCurrentLiabilities%2CtrailingOtherCurrentLiabilities%2CannualCurrentDeferredRevenue%2CtrailingCurrentDeferredRevenue%2CannualCurrentAccruedExpenses%2CtrailingCurrentAccruedExpenses%2CannualIncomeTaxPayable%2CtrailingIncomeTaxPayable%2CannualAccountsPayable%2CtrailingAccountsPayable%2CannualCurrentDebt%2CtrailingCurrentDebt%2CannualTotalNonCurrentAssets%2CtrailingTotalNonCurrentAssets%2CannualOtherNonCurrentAssets%2CtrailingOtherNonCurrentAssets%2CannualOtherIntangibleAssets%2CtrailingOtherIntangibleAssets%2CannualGoodwill%2CtrailingGoodwill%2CannualInvestmentsAndAdvances%2CtrailingInvestmentsAndAdvances%2CannualNetPPE%2CtrailingNetPPE%2CannualAccumulatedDepreciation%2CtrailingAccumulatedDepreciation%2CannualGrossPPE%2CtrailingGrossPPE%2CannualCurrentAssets%2CtrailingCurrentAssets%2CannualOtherCurrentAssets%2CtrailingOtherCurrentAssets%2CannualInventory%2CtrailingInventory%2CannualAccountsReceivable%2CtrailingAccountsReceivable%2CannualCashCashEquivalentsAndMarketableSecurities%2CtrailingCashCashEquivalentsAndMarketableSecurities%2CannualOtherShortTermInvestments%2CtrailingOtherShortTermInvestments%2CannualCashAndCashEquivalents%2CtrailingCashAndCashEquivalents&merge=false&period1=493590046&period2=1580725608&corsDomain=finance.yahoo.com'
+# cookie_str = 'thamba=2; thamba=2; APID=UP4cb49ffa-44d5-11ea-b845-06c47f77dfdf; APIDTS=1580713302; PH=fn=eEYl6vvsppBziRMc&l=en-US; Y=v=1&n=1m1ns3a5a7thr&l=1s59pggo59iuf365tc8d8u8fah7cv9xlel4pm5fj/o&p=02qvvvv00000000&r=16f&intl=us; AO=u=1; GUCS=Af5TjKua; A1S=d=AQABBBwMKF4CEKqtb8cnQJlGfNR38HUuqjUFEgEAAQIaOV4KX9x0rXYB_SMAAAcIHAwoXnUuqjUID6hgelzVIAivH4_v7DCBbgkBBwoBlQ&S=AQAAAr1ESoGMh2gx5_704d2QRew; B=3baheelf2g30s&b=4&d=hi7gp8BtYFlFcjdDFTYl&s=pu&i=qGB6XNUgCK8fj._sMIFu; GUC=AQEAAQJeORpfCkIfhgRq; cmp=t=1580715317&j=0; PRF=t%3DV%252B%255EIXIC%252B%255EGSPC%252BFB%252BKO%252BGM%252BJPM%252BHSY%252BCIB%252BADC%252BGS%252BTME%252BAXP%252BAAON%252BBRKB%26qsp-fnncls-cue%3D1'
+# cookie_str2 = "APID=UP4cb49ffa-44d5-11ea-b845-06c47f77dfdf; Y=v=1&n=1m1ns3a5a7thr&l=1s59pggo59iuf365tc8d8u8fah7cv9xlel4pm5fj/o&p=02qvvvv00000000&r=16f&intl=us; AO=u=1; A1S=d=AQABBBwMKF4CEKqtb8cnQJlGfNR38HUuqjUFEgEAAQIaOV4KX9x0rXYB_SMAAAcIHAwoXnUuqjUID6hgelzVIAivH4_v7DCBbgkBBwoBlQ&S=AQAAAr1ESoGMh2gx5_704d2QRew; GUC=AQEAAQJeORpfCkIfhgRq; PH=fn=aWHhh27ii5D4_7Pb&l=en-US&i=us; B=3baheelf2g30s&b=4&d=hi7gp8BtYFlFcjdDFTYl&s=pu&i=qGB6XNUgCK8fj._sMIFu; PRF=t%3DV%252BBRKB%252BAEO%252BHSY%252BMA%252B%255EIXIC%252B%255EGSPC%252BFB%252BKO%252BGM%252BJPM%252BCIB%252BADC%252BGS%252BTME%26qsp-fnncls-cue%3D1"
+# url2 = 'https://query1.finance.yahoo.com/ws/fundamentals-timeseries/v1/finance/timeseries/V?lang=en-US&region=US&symbol=V&padTimeSeries=true&type=quarterlyEbitda%2CtrailingEbitda%2CquarterlyWeighteAverageShare%2CtrailingWeighteAverageShare%2CquarterlyDilutedAverageShares%2CtrailingDilutedAverageShares%2CquarterlyBasicAverageShares%2CtrailingBasicAverageShares%2CquarterlyearningsPerShare%2CtrailingearningsPerShare%2CquarterlyDilutedEPS%2CtrailingDilutedEPS%2CquarterlyBasicEPS%2CtrailingBasicEPS%2CquarterlyNetIncomeCommonStockholders%2CtrailingNetIncomeCommonStockholders%2CquarterlyNetIncome%2CtrailingNetIncome%2CquarterlyNetIncomeContinuousOperations%2CtrailingNetIncomeContinuousOperations%2CquarterlyTaxProvision%2CtrailingTaxProvision%2CquarterlyPretaxIncome%2CtrailingPretaxIncome%2CquarterlyOtherIncomeExpense%2CtrailingOtherIncomeExpense%2CquarterlyInterestExpense%2CtrailingInterestExpense%2CquarterlyOperatingIncome%2CtrailingOperatingIncome%2CquarterlyOperatingExpense%2CtrailingOperatingExpense%2CquarterlySellingGeneralAndAdministration%2CtrailingSellingGeneralAndAdministration%2CquarterlyResearchAndDevelopment%2CtrailingResearchAndDevelopment%2CquarterlyGrossProfit%2CtrailingGrossProfit%2CquarterlyCostOfRevenue%2CtrailingCostOfRevenue%2CquarterlyTotalRevenue%2CtrailingTotalRevenue&merge=false&period1=493590046&period2=1580745554&corsDomain=finance.yahoo.com'
+# import requests
+# import time
+# import re
+# import sys
+# coo = requests.cookies.RequestsCookieJar()
+# sys.path.append('./')
+# cookie_split = cookie_str2.split(';')
+# for s in cookie_split:
+#     key = s.split('=')[0]
+#     value = s.split('=')[1]
+#     coo.set(key,value)
+#
+# now = time.strftime('%Y.%m.%d %H:%M:%S')  # 获取当前时间
+# headers = {
+#     'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; WOW64; rv:56.0) Gecko/20100101 Firefox/56.0',
+#     'Content-Type': 'application/x-www-form-urlencoded'
+#     }
+#
+# sess = requests.session()
+# sess.cookies.update(coo)
+#
+# resp = sess.get(url, headers=headers, allow_redirects=False)
+# print(resp)
+# print(resp.json())
+#
+# a = [0,1,2,3,4]
+# b = [5,6,7,8,9]
+# for i in a:
+#     print(i)
+#     for n in b:
+#         if n ==7:
+#             break
+#         else:
+#             print(n)
+# import threading
+# import time
+# import datetime
+
+# print(datetime.date.fromtimestamp(1064880000).strftime('%Y-%m-%d'))
+# print(time.mktime(time.strptime('2003-09-30', "%Y-%m-%d")))
+# print(int(time.mktime(datetime.datetime.strptime('2003-09-30', "%Y-%m-%d").timetuple())))
+# import requests
+# url = 'http://xueqiu.com/stock/industry/stockList.json?code=DAL&type=1&size=100'
+      
+
+# result = requests.get(url)
+
+# print(result)
+
+import datetime;
+ts = str(int(datetime.datetime(2020,1,1).timestamp()))
+print(ts)

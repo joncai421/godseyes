@@ -110,5 +110,32 @@ def get_sheet_default_value(type):
             "costOfRevenue_Rate": 0,  # 销售成本/营业成本比率(costOfRevenue/totalRevenue)
             "interest_Rate": 0,  # 利息比率(interestExpense/totalRevenue)
             "Earnings_per_share": 0,  # 每股净收益(netIncome/市场股数(总股本)share_capital/sharesOutstanding)
-            "Fstatus": 0
+            "Earnings_per_share_diluted": 0,  # 每股净收益(netIncome/市场股数(总股本)share_capital/sharesOutstanding)
+            "Fstatus": 0,
+            "share_capital": 0,
+            "Ebitda": 0,
+            "WASO": 0,
+            "WASO_diluted": 0,
+        }
+    elif type == 'income_sheet_trans':
+        return {
+            'PretaxIncome': 'incomeBeforeTax',
+            'Ebitda': 'Ebitda',
+            'DilutedAverageShares': 'WASO_diluted',
+            'InterestExpense': 'interestExpense',
+            'BasicAverageShares': 'WASO',
+            'TaxProvision': 'incomeTaxExpense',
+            'OtherIncomeExpense': 'totalOtherIncomeExpenseNet',
+            'OperatingIncome': 'operatingIncome',
+            'NetIncomeCommonStockholders': 'netIncomeApplicableToCommonShares',
+            'DilutedEPS': 'Earnings_per_share_diluted',
+            'OperatingExpense': 'totalOperatingExpenses',
+            'SellingGeneralAndAdministration': 'sellingGeneralAdministrative',
+            'GrossProfit': 'grossProfit',
+            'CostOfRevenue': 'costOfRevenue',
+            'TotalRevenue': 'totalRevenue',
+            'NetIncomeContinuousOperations': 'netIncomeFromContinuingOps',
+            'NetIncome': 'netIncome',
+            'BasicEPS': 'Earnings_per_share',
+            'ResearchAndDevelopment': 'researchDevelopment'
         }

@@ -1,0 +1,1 @@
+{"finance":{"result":{"symbol":"GOLD","priceBookRatio":1.626994,"peRatio":0.0,"revenue":{"raw":7.243E9,"fmt":"7.24B","longFmt":"7,243,000,000.00"},"valuationColor":0.0,"dps":0.2,"currentPrice":19.065,"valuationDescription":"Overvalued","epsGrowth":5.0},"error":null}}

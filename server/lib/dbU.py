@@ -12,7 +12,7 @@ insert('c_table',[{'a':1,'b':2,'c':3},{'a':4,'b':5,'c':6}])
 '''
 def insert (table, insertObj, **options):
     db = options.get('db', None) or "wallstreet"
-    connection = pymysql.connect(host ="localhost", user ="j", passwd ="123QWEasd", db=db, charset='utf8',port=3306 )
+    connection = pymysql.connect(host ="localhost", user ="root", passwd ="123QWEasd", db=db, charset='utf8',port=3306 )
     cursor = connection.cursor()
     fields = []
     values = []
@@ -50,6 +50,7 @@ def insert (table, insertObj, **options):
         connection.commit()
     except:
         print ('there is a fucking error!:')
+        print(queryStr)
         connection.rollback()
     connection.close()
 
@@ -63,7 +64,7 @@ insert('table_name',{'c':1,'d':2,'e':3},{'a':1,'b':1})
 def update (table, dataObj, condiObj, **options):
     db = options.get('db', None) or "wallstreet"
     if len(dataObj)>0 and len(condiObj)>0:
-        connection = pymysql.connect(host="localhost", user="j", passwd="123QWEasd", db=db, charset='utf8',port=3306)
+        connection = pymysql.connect(host="localhost", user="root", passwd="123QWEasd", db=db, charset='utf8',port=3306)
         cursor = connection.cursor()
         queryStr = "UPDATE `" + table + "` SET  "
         whereCondi = ' WHERE '
@@ -80,13 +81,14 @@ def update (table, dataObj, condiObj, **options):
             arr.append(key+'='+connection.escape(condiObj[key]))
         whereCondi = whereCondi + ' AND '.join(arr);
         queryStr = queryStr+whereCondi
-        print (queryStr)
+        # print (queryStr)
 
         try:
             cursor.execute(queryStr)
             connection.commit()
         except:
-            print ('there is a fucking error!')
+            print ('there is a fucking error!:')
+            print(queryStr)
             connection.rollback()
         connection.close()
 
@@ -109,7 +111,7 @@ select('stock_basic_info',
 '''
 def select (mainTable, selectFields, conditions, fromCondition, **options):
     db = options.get('db', None) or "wallstreet"
-    connection = pymysql.connect(host="localhost", user="j", passwd="123QWEasd", db=db, charset='utf8',port=3306)
+    connection = pymysql.connect(host="localhost", user="root", passwd="123QWEasd", db=db, charset='utf8',port=3306)
     cursor = connection.cursor()
     query = 'SELECT ' + ','.join(selectFields) +' FROM '+mainTable +' '
     if isinstance(fromCondition, str):
@@ -126,8 +128,39 @@ def select (mainTable, selectFields, conditions, fromCondition, **options):
         for c in range(len(conditions)):
             condition_list.append(conditions[c][0]+conditions[c][1]+conditions[c][2])
         query = query + ' AND '.join(condition_list)
+
+    groupby = options.get('groupby', None) or None
+    orderby = options.get('orderby', None) or None
+    limit = options.get('limit', None) or None
+    nolog = options.get('nolog', None) or None
+
+    if groupby:
+        query += ' GROUP BY ' + options['groupby']
+
+    if orderby:
+        query += ' ORDER BY ' + options['orderby']
+
+    if limit:
+        query += ' LIMIT ' + str(options['limit'])
     query+=';'
-    print (query)
+
+    if nolog is None:
+        print (query)
+    try:
+        cursor.execute(query)
+        result = cursor.fetchall()
+        return result
+    except:
+        print ('there is a fucking error!')
+        print(query)
+        return []
+    connection.close()
+
+def getTableFields (tableName, **options):
+    db = options.get('db', None) or "wallstreet"
+    connection = pymysql.connect(host="localhost", user="root", passwd="123QWEasd", db=db, charset='utf8', port=3306)
+    cursor = connection.cursor()
+    query = 'desc ' + tableName +';'
     try:
         cursor.execute(query)
         result = cursor.fetchall()
@@ -136,4 +169,3 @@ def select (mainTable, selectFields, conditions, fromCondition, **options):
         print ('there is a fucking error!')
         return []
     connection.close()
-

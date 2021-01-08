@@ -3,11 +3,13 @@ import lib.tools
 import time
 import random
 import requests
-from_year = 2019
+import datetime
+from_year = 2020
 to_year = 2021
-from_month = 4
-from_date = 15
+from_month = 1
+from_date = 1
 special_symbol = ['DJI']
+startTimestamp = str(int(datetime.datetime(from_year, from_month, from_date).timestamp()))
 
 def getDivided (a,b):
     a = a if isinstance(a, float) else float(a)
@@ -20,26 +22,17 @@ def getDivided (a,b):
 def getRate (a,b):
     return round(getDivided(a,b)*100, 8)
 
-def is_vaild_time (year, month, date):
+def is_valid_time (year, month, date):
     global from_year
-    global to_year
     global from_month
     global from_date
-    if from_year <= int(year) and int(year) <= to_year:
-        if from_year < int(year):
-            return True;
-        elif from_year == int(year):
-            if from_month < int(month):
-                return True;
-            if from_month == int(month):
-                if  from_date <= int(date):
-                    return True;
-                else:
-                    return False;
-        else:
-            return False;
+    start_date = datetime.datetime(from_year, from_month, from_date)
+    this_date = datetime.datetime(int(year), int(month), int(date))
+    if start_date <= this_date:
+        return True
     else:
-        return False;
+        return False
+
 def is_last_date (year, month, date):
     global from_year
     global to_year
@@ -65,7 +58,7 @@ def insert_daily_price_table(symbol,raw_data):
         year = timeObj['year']
         month = timeObj['month']
         date = timeObj['date']
-        if is_vaild_time(year, month, date):
+        if is_valid_time(year, month, date):
             table_name = 'daily_price_' + year
             if table_name not in insert_map:
                 insert_map[table_name] = []
@@ -96,7 +89,7 @@ def insert_daily_price_table(symbol,raw_data):
             insert_data['Flastest_modify_time'] = time.strftime('%Y-%m-%d %H:%M:%S')
             insert_map[table_name].append(insert_data)
             last_close.append(insert_data['Pri_close'])
-        elif is_last_date(year, month, date):
+        elif is_last_date(int(year), int(month), int(date)):
             last_close.append(raw_data['chart']['result'][0]['indicators']['quote'][0]['close'][index] or 0
                               )
     for year_tables in insert_map:
@@ -110,11 +103,13 @@ def insert_daily_price_table(symbol,raw_data):
 def get_d_price_data(symbol):
     print ('filling starting for symbol:'+symbol)
     global special_symbol
+    global startTimestamp
     try:
         if symbol in special_symbol:
-            url = 'https://query2.finance.yahoo.com/v8/finance/chart/%5E'+symbol+'?formatted=true&crumb=qzKRwVIK1az&lang=en-US&region=US&period1=1262275200&period2=1561564800&interval=1d&events=div%7Csplit&corsDomain=finance.yahoo.com'
+            url = 'https://query2.finance.yahoo.com/v8/finance/chart/%5E'+symbol+'?formatted=true&crumb=qzKRwVIK1az&lang=en-US&region=US&period1='+startTimestamp+'&period2=1704067200&interval=1d&events=div%7Csplit&corsDomain=finance.yahoo.com'
+            # url = 'https://query2.finance.yahoo.com/v8/finance/chart/%5E'+symbol+'?formatted=true&crumb=qzKRwVIK1az&lang=en-US&region=US&period1=1577836800&period2=1704067200&interval=1d&events=div%7Csplit&corsDomain=finance.yahoo.com'
         else:
-            url = 'https://query2.finance.yahoo.com/v8/finance/chart/' + symbol + '?formatted=true&crumb=qzKRwVIK1az&lang=en-US&region=US&period1=1262275200&period2=1561564800&interval=1d&events=div%7Csplit&corsDomain=finance.yahoo.com'
+            url = 'https://query2.finance.yahoo.com/v8/finance/chart/' + symbol + '?formatted=true&crumb=qzKRwVIK1az&lang=en-US&region=US&period1='+startTimestamp+'&period2=1704067200&interval=1d&events=div%7Csplit&corsDomain=finance.yahoo.com'
         print ('request url:' + url)
         result = requests.get(url)
         # print (result.json())
@@ -127,7 +122,9 @@ def get_symbols (condition):
     return res
 
 def update_iterate(symbol_list):
-    for index in range(len(symbol_list)):
+    
+    start_index = 0
+    for index in range(start_index, len(symbol_list)):
         print ('update_iterate :' + symbol_list[index][0] + ',index:' + str(index + 1) + ' of ' + str(len(symbol_list)))
         r = get_d_price_data(symbol_list[index][0])
         if r['chart']['result'] is not None and len(r['chart']['result'][0])>0 and 'timestamp' in r['chart']['result'][0]:
@@ -143,7 +140,7 @@ def update_iterate(symbol_list):
 
 def fill_daily_price_data():
     # condition = [['fid','=',"21625"]]
-    condition = [['has_daily_price','=','1']]
+    condition = [['hasReport','=','33']]
     # condition = [['has_month_price','=',"1"],['has_daily_price','!=','1']]
     # condition = [['stock_status','=',"'c'"],['has_daily_price','!=','1']]
     # condition = [['has_daily_price','!=','1'],['fid%3','=','1']]
