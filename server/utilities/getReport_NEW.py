@@ -148,11 +148,19 @@ def getFieldNameAndValue (obj):
     else:
         return {'name': obj['meta']['type'][0], 'value': []}
 
-def get_symbol():
-    condition = [['stock_basic_info.hasReport', '=', '33']]
-    # condition = [['stock_basic_info.stock_symbol', ' IN ', " ('PHIO', 'ATRO', 'GIII', 'IRR', 'LL', 'LMAT', 'LMNR', 'LMNX', 'LMT', 'LM', 'LNC', 'LNDC', 'LND', 'LNG', 'LNN', 'LNT', 'LODE', 'LOGC', 'LOGI', 'LYTS', 'LYV', 'LZB', 'L', 'MAA', 'MACE', 'MACK', 'MAC', 'MANT', 'MANU', 'MAN', 'MARA', 'MAR', 'MASI', 'MAS', 'MATW', 'MATX', 'NHI', 'NHLD', 'NMY', 'PAR', 'PBYI', 'QLYS', 'SURG', 'CCLP', 'CCS', 'CCX', 'CDAY', 'CDEV', 'CDK', 'CDLX', 'CDMO', 'CDMOP', 'CDNA', 'CDOR', 'CDTX', 'CDYCF', 'CEA', 'CEF', 'CEIX', 'CEL', 'CELC', 'CELH', 'CERC', 'CETX', 'CGEN', 'CHA', 'CHCT', 'CHEK', 'CHFS', 'CHKP', 'CMPR', 'CMRE', 'CNCE', 'CNDT', 'CNFR', 'CNHI', 'CNI', 'CNNE', 'CNQ', 'CNXM', 'CNXN', 'COCP', 'CODA', 'CODX', 'COHN', 'COLD', 'CORV', 'COUP', 'CP', 'CPA', 'CPAC', 'CPAH', 'CPHC', 'CPHI', 'CPL', 'CPLG', 'CPLP', 'CPRI', 'CRBP', 'CRESY', 'CREX', 'CRHM', 'CRNT', 'CRNX', 'CRON', 'CRSP', 'DB', 'DBVT', 'EHC', 'EHT', 'EIDX', 'EIGR', 'EKSO', 'ELAN', 'ELF', 'ELLO', 'ELOX', 'ELP', 'ELTK', 'ELVT', 'EMX', 'ENB', 'ENBL', 'ENFC', 'ENIA', 'ENIC', 'ENVA', 'EOLS', 'EPC', 'EQBK', 'EQC', 'EQFN', 'EQH', 'EQNR', 'ERF', 'ERIC', 'ERJ', 'EROS', 'ERYP', 'ESBA', 'ESEA', 'ESGRO', 'ESGRP', 'ESLT', 'ESNC', 'ESQ', 'ESTA', 'ETON', 'ETRN', 'EVGN', 'EVH', 'EVRG', 'EVRI', 'EXFO', 'EXK', 'FMCI', 'FMCIU', 'FMS', 'FMX', 'FND', 'FNJN', 'FNKO', 'FNV', 'FNWB', 'FOCS', 'FOMX', 'FOR', 'FORK', 'FORTY', 'FOXA', 'FPAC', 'GEC', 'GECC', 'GEMP', 'GENC', 'GENE', 'GEO', 'GGB', 'GGO', 'GGZ', 'GH', 'GHC', 'GHG', 'GIB', 'GIG', 'GIGM', 'GIL', 'GILT', 'GKOS', 'GLBS', 'GLIBA', 'GLIBB', 'GLIBP', 'GLMD', 'GLNG', 'GLOG', 'GLOP', 'GLOW', 'GLPG', 'GMS', 'GNCA', 'GNPX', 'GOGL', 'HBANO', 'HBB', 'HBM', 'HCAC', 'HEXO', 'HFFG', 'HFRO', 'HGSH', 'HGV', 'HIE', 'HIFS', 'HIHO', 'HIMX', 'HJLI', 'HLAN', 'HLF', 'HLG', 'HLI', 'HLNE', 'HLX', 'HMC', 'HMI', 'HMLP', 'HMY', 'IAC', 'IEA', 'IESC', 'IFFT', 'IFMK', 'IFRX', 'IGLD', 'IRCP', 'IRMD', 'IRS', 'IRTC', 'ITP', 'JYNT', 'KALA', 'KALV', 'KANG', 'KB', 'KBAL', 'KBLM', 'KBLMU', 'KBSF', 'KDMN', 'KDP', 'KE', 'KELYA', 'KELYB', 'KEN', 'KEP', 'KGC', 'KGJI', 'KL', 'KLXE', 'KNOP', 'KNSA', 'KNSL', 'KOD', 'KOF', 'KREF', 'KRNT', 'KRP', 'LITB', 'LIVN', 'LIVX', 'LKSD', 'LLEX', 'LLIT', 'LMB', 'LMFA', 'LMRK', 'LMRKN', 'LMRKO', 'LMRKP', 'LMST', 'LN', 'LNTH', 'LOAC', 'LOACU', 'M', 'MEIP', 'MELR', 'MEOH', 'METC', 'MFAC', 'MFC', 'MFG', 'MFGP', 'MFIN', 'MGA', 'MGEN', 'MGIC', 'MGTA', 'MGTX', 'MGY', 'MICR', 'MIME', 'MINDP', 'MIXT', 'MJCO', 'MMAC', 'MMYT', 'MNDO', 'MNLO', 'MNST', 'MOGO', 'MOGU', 'MOMO', 'MOR', 'MOSC', 'MOTS', 'MOXC', 'MPVD', 'MR', 'MRAM', 'MRKR', 'MSGN', 'MSVB', 'MT', 'MTBC', 'MTBCP', 'MTC', 'MTEM', 'MTFB', 'MTL', 'MTLS', 'MTNB', 'MTSL', 'MUDS', 'MUDSU', 'MUFG', 'MUX', 'MXMTY', 'MYFW', 'NAOV', 'NAT', 'NBEV', 'NBLX', 'NK', 'NM', 'NMCI', 'NMM', 'NMR', 'NMRD', 'NMRK', 'NMS', 'NNDM', 'NOA', 'NOAH', 'NODK', 'NOG', 'NOK', 'NOMD', 'NRC', 'NSA', 'NTB', 'NTES', 'NTGN', 'NTIC', 'NTLA', 'NTNX', 'NTRP', 'NTRSP', 'NTZ', 'NUS', 'NVCN', 'NVCR', 'NVFY', 'NVGS', 'NVO', 'NVRO', 'NVS', 'NVTA', 'NVUS', 'NWBO', 'NWE', 'NWSA', 'NXGN', 'NXPI', 'NXRT', 'NXTD', 'NYMTN', 'OCX', 'ODT', 'OEC', 'OIIM', 'OKTA', 'OLLI', 'OMP', 'ON', 'PAC', 'PACD', 'PACQ', 'PACQU', 'PAGS', 'PAHC', 'PAM', 'PARR', 'PATI', 'PAVM', 'PAYC', 'PB', 'PBA', 'PBBI', 'PBCTP', 'PBFX', 'PBR', 'PBTS', 'PCB', 'PCSB', 'PCYO', 'PDD', 'PDLB', 'PDS', 'PE', 'PEER', 'PERI', 'PETQ', 'PETZ', 'PFBC', 'PFNX', 'PGHEF', 'PGRE', 'PHAS', 'PHCF', 'PHG', 'PHI', 'PHIO', 'PHUN', 'PHYS', 'PI', 'PIH', 'PIHPP', 'PIRS', 'PIXY', 'PJT', 'PK', 'PKX', 'PLAG', 'PLAN', 'PLG', 'PLM', 'PLSE', 'PLXP', 'PLYA', 'PLYM', 'PME', 'PMTS', 'PNRL', 'POLA', 'POPE', 'PPDF', 'PPIH', 'PQG', 'PRAH', 'PRED', 'PRIM', 'PRNB', 'PRPH', 'PRPL', 'PRPO', 'PRQR', 'PRT', 'PRTH', 'PRTO', 'PRTY', 'PS', 'PSDO', 'PSLV', 'PSO', 'PSTG', 'PT', 'PTE', 'PTGX', 'PTNR', 'PTR', 'PTVCA', 'PTVCB', 'PUB', 'PUK', 'PULM', 'PUYI', 'PVAC', 'PVBC', 'PVL', 'PVT', 'PXS', 'PYPL', 'QADA', 'QADB', 'QES', 'QFIN', 'QGEN', 'QHC', 'QIWI', 'QRHC', 'QRTEA', 'QRTEB', 'QRVO', 'QSR', 'QTNA', 'QTNT', 'QTRH', 'QTRRF', 'QTRX', 'QTT', 'QTWO', 'QURE', 'RACE', 'RADA', 'RAMP', 'RARX', 'RAVE', 'RBA', 'RBB', 'RBBN', 'RBKB', 'RBS', 'RBZ', 'RC', 'RCG', 'RCKT', 'RCM', 'RCON', 'RCUS', 'RDCM', 'RDFN', 'RDHL', 'RDIB', 'RDNT', 'RDUS', 'RDVT', 'RDWR', 'RDY', 'REDU', 'REED', 'REI', 'RELX', 'REPH', 'REPL', 'RESN', 'RETA', 'RETO', 'REVG', 'REZI', 'RFL', 'RFP', 'RGNX', 'RGSE', 'RHE', 'RHHBY', 'RILY', 'RIO', 'RIOT', 'RIV', 'RIVE', 'RKDA', 'RMBL', 'RMED', 'RMNI', 'RMNIU', 'RNDB', 'RNGR', 'RNVA', 'ROAN', 'ROIC', 'ROKU', 'ROSEU')"]]
-    # condition = [['stock_basic_info.stock_symbol', ' IN ', "('FMCI')"]]
-    res = lib.dbU.select('stock_basic_info',['stock_symbol'],condition, [])
+def get_symbol(symbols):
+    # condition = [['stock_basic_info.hasReport', '=', '33']]
+    # condition = [['stock_basic_info.stock_symbol', ' IN ', " ('BABA', 'CO', 'LX', 'INTC', 'BRK-B', 'V', 'BAC', 'JD', 'QFIN', 'HSY', 'AXP', 'MA', 'D', 'BK', 'TRV', 'NTES', 'SNE', 'FB', 'HON', 'BAM', 'LULU', 'TCEHY', 'ALXN', 'DAL', 'AMZN', 'MU', 'TWTR', 'OLED', 'SIVB', 'NIO', 'BILI', 'BEKE', 'KO', 'ORCL', 'SWBI', 'RGR', 'XOM', 'NVDA', 'RY', 'MNSO', 'LSXMK')"]]
+    
+    # condition = [['stock_basic_info.stock_symbol', ' IN ', " ('AIV','CSCO','MSB','AER','BFS','BIIB','DHIL','INCY','MPW','NL','NRG','ABEV','ATAX','BTI','CEO','FLY','IONS','LBTYB','PBA','SPG','VNO','VRSN,''WRE','WRI','TGS')"]]
+
+    if symbols:
+        condition = [['stock_basic_info.stock_symbol', ' IN ', "('"+symbols+"')"]]
+    else:
+        condition = [['stock_basic_info.hasReport', '=', '33']]
+
+    # print(condition)
+    res = lib.dbU.select('stock_basic_info',['stock_symbol'], condition, [])
     return res
 
 def isNewReport(latestReportsYear, latestReportsMonth, ryear, rmonth):
@@ -244,12 +252,12 @@ def getReportJson(url, isRetry):
             print('failed, retry')
             return getReportJson(url, True)
 
-def updateReport():
+def updateReport(symbol):
     print('-------------update start----------------')
     types = ['balance_quarterly', 'balance_annual', 'cash_quarterly', 'cash_annual', 'income_quarterly', 'income_annual']
     error_symbols = []
-    res = get_symbol()
-    # count = 5700
+    res = get_symbol(symbol)
+    # count = 2528
     count = 0
     l = len(res)
     for i in range(count, l):

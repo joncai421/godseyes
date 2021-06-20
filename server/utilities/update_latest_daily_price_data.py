@@ -4,10 +4,11 @@ import time
 import random
 import requests
 import datetime
-from_year = 2020
-to_year = 2021
+# from_year = 1997
+from_year = 2021
+to_year = 2022
 from_month = 1
-from_date = 1
+from_date = 9
 special_symbol = ['DJI']
 startTimestamp = str(int(datetime.datetime(from_year, from_month, from_date).timestamp()))
 
@@ -46,7 +47,7 @@ def is_last_date (year, month, date):
     else:
         return False;
 
-def insert_daily_price_table(symbol,raw_data):
+def insert_daily_price_table(symbol,raw_data,isHK):
     last_close = []
     timestamp = raw_data['chart']['result'][0]['timestamp']
 
@@ -94,13 +95,19 @@ def insert_daily_price_table(symbol,raw_data):
                               )
     for year_tables in insert_map:
        print (year_tables)
-       lib.dbU.insert(year_tables, insert_map[year_tables])
+       if isHK ==True:
+            lib.dbU.insert(year_tables, insert_map[year_tables], db='hk')
+       else:
+            lib.dbU.insert(year_tables, insert_map[year_tables])
+
         # print (year_tables+':')
     # print ('insert completed for symbol:' + symbol+',updating has_daily_price status..')
     # lib.dbU.update('stock_basic_info', {'has_daily_price':'1'},{'stock_symbol':symbol})
 
 
-def get_d_price_data(symbol):
+def get_d_price_data(symbol, isHK):
+    if isHK == True:
+        symbol = symbol+'.HK'
     print ('filling starting for symbol:'+symbol)
     global special_symbol
     global startTimestamp
@@ -117,18 +124,22 @@ def get_d_price_data(symbol):
     except:
         return {'chart':{'result':None}}
 
-def get_symbols (condition):
-    res = lib.dbU.select('stock_basic_info',['stock_symbol','cik'],condition,[])
+def get_symbols (condition, isHK):
+    if isHK ==True:
+        res = lib.dbU.select('stock_basic_info',['stock_symbol'],condition,[], db='hk')
+    else:
+        res = lib.dbU.select('stock_basic_info',['stock_symbol'],condition,[])
+    
     return res
 
-def update_iterate(symbol_list):
+def update_iterate(symbol_list, isHK):
     
     start_index = 0
     for index in range(start_index, len(symbol_list)):
         print ('update_iterate :' + symbol_list[index][0] + ',index:' + str(index + 1) + ' of ' + str(len(symbol_list)))
-        r = get_d_price_data(symbol_list[index][0])
+        r = get_d_price_data(symbol_list[index][0], isHK)
         if r['chart']['result'] is not None and len(r['chart']['result'][0])>0 and 'timestamp' in r['chart']['result'][0]:
-            insert_daily_price_table(symbol_list[index][0],r)
+            insert_daily_price_table(symbol_list[index][0],r,isHK)
             print (symbol_list[index][0]+' has completed filling, wait for next one...')
         else:
             print (symbol_list[index][0] + ' is empty, wait for next one...')
@@ -138,20 +149,21 @@ def update_iterate(symbol_list):
     print ('---task completed---, check for new data...')
     # fill_daily_price_data()
 
-def fill_daily_price_data():
+def fill_daily_price_data(isHK):
     # condition = [['fid','=',"21625"]]
     condition = [['hasReport','=','33']]
+    # condition = [['stock_symbol','=','"JD"']]
     # condition = [['has_month_price','=',"1"],['has_daily_price','!=','1']]
     # condition = [['stock_status','=',"'c'"],['has_daily_price','!=','1']]
     # condition = [['has_daily_price','!=','1'],['fid%3','=','1']]
     # condition = [['has_daily_price','!=','1']]
-
-    symbol_list = get_symbols(condition)
+    
+    symbol_list = get_symbols(condition, isHK)
     print (str(len(symbol_list))+' stock to fill data')
 
     if int(len(symbol_list))>0:
         # update_iterate([['TME']])
-        update_iterate(symbol_list)
+        update_iterate(symbol_list, isHK)
     else:
         print ('---task completed---')
 

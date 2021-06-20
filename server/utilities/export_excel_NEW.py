@@ -2,6 +2,7 @@ import xlsxwriter
 import lib.dbU
 import config.fields_defenition
 import config.report_field_definition as r_field_definition
+import os
 
 def trans_type(i):
     if isinstance(i, float):
@@ -26,7 +27,10 @@ def getRate (a,b):
     return round(getDivided(a,b)*100, 2)
 
 def export (symbol,data):
-    workbook = xlsxwriter.Workbook('asset/report_excel/'+symbol+'.xlsx')
+    file_name = 'asset/report_excel/'+symbol+'.xlsx'
+    if os.path.exists(file_name):
+        os.remove(file_name)
+    workbook = xlsxwriter.Workbook(file_name)
     skip_fields = ['bid','cf_id','ic_id','stock_symbol','Flastest_modify_time','Fstatus']
     bold = workbook.add_format({'bold': True})
     red = workbook.add_format({'color': 'red'})
@@ -69,13 +73,13 @@ def export_excel_with_symbol(symbol, isHK):
         database = 'hk'
     else:
         database = 'wallstreet'
-    balance_sheet_data_annual = lib.dbU.select('balance_table', ['*'],[['stock_symbol', '=', "'"+symbol+"'"],['report_type',' IN ', "('annual','ttm')"]], [], orderby='report_timestamp desc', db=database)
+    balance_sheet_data_annual = lib.dbU.select('balance_table', ['*'],[['stock_symbol', '=', "'"+symbol+"'"],['report_type',' IN ', "('annual')"]], [], orderby='report_timestamp desc', db=database)
     balance_sheet_data_quarterly = lib.dbU.select('balance_table', ['*'],[['stock_symbol', '=', "'"+symbol+"'"],['report_type',' IN ', "('quarterly','ttm')"]], [], orderby='report_timestamp desc', db=database)
     balance_sheet_field = lib.dbU.getTableFields('balance_table', db=database)
-    cash_flow_data_annual = lib.dbU.select('cash_flow_table', ['*'],[['stock_symbol', '=', "'"+symbol+"'"],['report_type',' IN ', "('annual','ttm')"]], [], orderby='report_timestamp desc', db=database)
+    cash_flow_data_annual = lib.dbU.select('cash_flow_table', ['*'],[['stock_symbol', '=', "'"+symbol+"'"],['report_type',' IN ', "('annual')"]], [], orderby='report_timestamp desc', db=database)
     cash_flow_data_quarterly = lib.dbU.select('cash_flow_table', ['*'],[['stock_symbol', '=', "'"+symbol+"'"],['report_type',' IN ', "('quarterly','ttm')"]], [], orderby='report_timestamp desc', db=database)
     cash_flow_field = lib.dbU.getTableFields('cash_flow_table', db=database)
-    income_statement_data_annual = lib.dbU.select('income_sheet_table', ['*'],[['stock_symbol', '=', "'"+symbol+"'"],['report_type',' IN ', "('annual','ttm')"]], [], orderby='report_timestamp desc', db=database)
+    income_statement_data_annual = lib.dbU.select('income_sheet_table', ['*'],[['stock_symbol', '=', "'"+symbol+"'"],['report_type',' IN ', "('annual')"]], [], orderby='report_timestamp desc', db=database)
     income_statement_data_quarterly = lib.dbU.select('income_sheet_table', ['*'],[['stock_symbol', '=', "'"+symbol+"'"],['report_type',' IN ', "('quarterly','ttm')"]], [], orderby='report_timestamp desc', db=database)
     income_statement_field = lib.dbU.getTableFields('income_sheet_table', db=database)
     rdata = [

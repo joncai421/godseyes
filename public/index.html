@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>value analyse</title>
+    <style>
+    </style>
+</head>
+<body>
+<div>
+    <p>symbol:<input type="text" id="symbol"></p>
+    <p>basic years:<input type="text" id="basic_years"></p>
+    <p>compare years:<input type="text" id="compare_years" placeholder="(split by ,)" style="width: 600px"></p>
+    <p style="font-weight: bold">balance fields:</p>
+    <p id="balanceFields"><input type="checkbox" field="StockholdersEquity" checked/>StockholdersEquity
+        <input type="checkbox" field="BookValue" checked/>BookValue</p>
+    <p style="font-weight: bold">cash fields:</p>
+    <p id="cashFields"><input type="checkbox" field="FreeCashFlow" checked/>FreeCashFlow   <input type="checkbox" field="OperatingCashFlow" checked/>OperatingCashFlow</p>
+    <p style="font-weight: bold">income fields:</p>
+    <p id="incomeFields">
+        <input type="checkbox" field="NetIncome" checked/>NetIncome        <input type="checkbox" field="NetIncomeCommonStockholders" checked/>NetIncomeCommonStockholders
+        <input type="checkbox" field="NOPAT" checked/>NOPAT        <input type="checkbox" field="Ebitda" checked/>Ebitda
+        <input type="checkbox" field="Ebit" checked/> Ebit       <input type="checkbox" field="BasicEPS" checked/>BasicEPS
+    </p>
+    <p style="font-weight: bold">share capital compare:</p>
+    <p id="shareCompare"><input type="radio" name="shareCompare" o="1" checked/>with basic year <input type="radio" name="shareCompare" o="2"/>others<input
+            type="text" id="sharesBase"></p>
+    <p>
+        <button id="submit">submit</button>
+    </p>
+</div>
+<script>
+    document.getElementById('submit').addEventListener("click", function () {
+        const symbol = document.getElementById("symbol").value.toUpperCase(),
+            basic_years = document.getElementById("basic_years").value,
+            compare_years_input = document.getElementById("compare_years"),
+            checked_balance_fields = document.getElementById("balanceFields").querySelectorAll('input[type=checkbox]:checked'),
+            checked_cash_fields = document.getElementById("cashFields").querySelectorAll('input[type=checkbox]:checked'),
+            checked_income_fields = document.getElementById("incomeFields").querySelectorAll('input[type=checkbox]:checked'),
+            shareBasic = document.querySelectorAll('input[type=radio]:checked')[0].getAttribute('o') ==1? null: document.getElementById("sharesBase").value,
+            balance_fields = [],
+            income_fields = [],
+            cash_fields = [],
+            compare_years = compare_years_input.value.match(/\d+/g);
+        checked_balance_fields.forEach((i)=>{
+            balance_fields.push(i.getAttribute('field'));
+        });
+        checked_cash_fields.forEach((i)=>{
+            cash_fields.push(i.getAttribute('field'));
+        });
+        checked_income_fields.forEach((i)=>{
+            income_fields.push(i.getAttribute('field'));
+        });
+        compare_years_input.value = compare_years.join(',');
+        console.log(symbol);
+        console.log(basic_years);
+        console.log(compare_years);
+        console.log(balance_fields);
+        console.log(income_fields);
+        console.log(cash_fields);
+        console.log(shareBasic);
+        fetch('http://localhost:8001/value_analyse', {
+            method: 'POST',
+            headers: {
+                'Accept': 'application/json',
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({symbol: symbol, compare_years: compare_years, basic_years: basic_years,balance_fields:balance_fields,income_fields:income_fields,cash_fields:cash_fields,shareBasic:shareBasic})
+        }).then(function (res) {
+            if (res.status == 200) {
+                console.log('respond received');
+                res.json().then(function (data) {
+                    console.log(data);
+                });
+            } else {
+                console.log('request failed');
+                console.log(res);
+            }
+        }, function (e) {
+            console.log('Error submitting');
+            console.log(e);
+        });
+    });
+</script>
+</body>
+</html>

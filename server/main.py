@@ -46,8 +46,9 @@ elif sys.argv[1] == '8':
     print ('---update_daily_price_data:for all stock---')#insert all daily historical data
     udpd.fill_daily_price_data()
 elif sys.argv[1] == '9':
+    isHK = True if sys.argv[2].upper()=='HK' else False
     print ('---update_daily_price_data:for all stock---')#update all daily historical data
-    uldpd.fill_daily_price_data()
+    uldpd.fill_daily_price_data(isHK)
 elif sys.argv[1] == '10':
     print ('---find_reverse---')
     find_rev.get_reverse_for_symbol(sys.argv[2],sys.argv[3])
@@ -109,6 +110,8 @@ elif sys.argv[1] == '30':
 elif sys.argv[1] == '31':
     arn.get_grow_sq_fcf()
 elif sys.argv[1] == '32':
-    updateRep.updateReport()
+    symbolList = '\',\''.join(sys.argv[2:len(sys.argv)])
+    updateRep.updateReport(symbolList)
 elif sys.argv[1] == '33':
-    updateRep_hk.updateReport()
+    symbolList = '\',\''.join(sys.argv[2:len(sys.argv)])
+    updateRep_hk.updateReport(symbolList)

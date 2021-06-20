@@ -148,8 +148,11 @@ def getFieldNameAndValue (obj):
     else:
         return {'name': obj['meta']['type'][0], 'value': []}
 
-def get_symbol():
-    condition = [['stock_basic_info.hasReport', '=', '33']]
+def get_symbol(symbols):
+    if symbols:
+        condition = [['stock_basic_info.stock_symbol', ' IN ', "('"+symbols+"')"]]
+    else:
+        condition = [['stock_basic_info.hasReport', '=', '33']]
     # condition = [['stock_basic_info.stock_symbol', ' IN ', "('0122', '0281', '2196', '2388', '8070', '8401')"]]
     res = lib.dbU.select('stock_basic_info',['stock_symbol'],condition, [], db='hk')
     return res
@@ -244,11 +247,11 @@ def getReportJson(url, isRetry):
             print('failed, retry')
             return getReportJson(url, True)
 
-def updateReport():
+def updateReport(symbol):
     print('-------------update start----------------')
     types = ['balance_quarterly', 'balance_annual', 'cash_quarterly', 'cash_annual', 'income_quarterly', 'income_annual']
     error_symbols = []
-    res = get_symbol()
+    res = get_symbol(symbol)
     # count = 5700
     count = 0
     l = len(res)

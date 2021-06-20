@@ -10,21 +10,20 @@
 <div>
     <p>symbol:<input type="text" id="symbol"></p>
     <p>basic years:<input type="text" id="basic_years"></p>
-    <p>compare years:<input type="text" id="compare_years" placeholder="(split by ,)"></p>
-    <p>balance fields:</p>
-    <p id="balanceFields">StockholdersEquity:<input type="checkbox" field="StockholdersEquity" checked/>
-        BookValue:<input type="checkbox" field="BookValue" checked/></p>
-    <p>cash fields:</p>
-    <p id="cashFields">FreeCashFlow:<input type="checkbox" field="FreeCashFlow" checked/> OperatingCashFlow:<input
-            type="checkbox" field="OperatingCashFlow" checked/></p>
-    <p>income fields:</p>
+    <p>compare years:<input type="text" id="compare_years" placeholder="(split by ,)" style="width: 600px"></p>
+    <p style="font-weight: bold">balance fields:</p>
+    <p id="balanceFields"><input type="checkbox" field="StockholdersEquity" checked/>StockholdersEquity
+        <input type="checkbox" field="BookValue" checked/>BookValue</p>
+    <p style="font-weight: bold">cash fields:</p>
+    <p id="cashFields"><input type="checkbox" field="FreeCashFlow" checked/>FreeCashFlow   <input type="checkbox" field="OperatingCashFlow" checked/>OperatingCashFlow</p>
+    <p style="font-weight: bold">income fields:</p>
     <p id="incomeFields">
-        NetIncome:<input type="checkbox" field="NetIncome" checked/> NetIncomeCommonStockholders:<input type="checkbox" field="NetIncomeCommonStockholders" checked/>
-        NOPAT:<input type="checkbox" field="NOPAT" checked/> Ebitda:<input type="checkbox" field="Ebitda" checked/>
-        Ebit:<input type="checkbox" field="Ebit" checked/> BasicEPS:<input type="checkbox" field="BasicEPS" checked/>
+        <input type="checkbox" field="NetIncome" checked/>NetIncome        <input type="checkbox" field="NetIncomeCommonStockholders" checked/>NetIncomeCommonStockholders
+        <input type="checkbox" field="NOPAT" checked/>NOPAT        <input type="checkbox" field="Ebitda" checked/>Ebitda
+        <input type="checkbox" field="Ebit" checked/> Ebit       <input type="checkbox" field="BasicEPS" checked/>BasicEPS
     </p>
-    <p>share capital compare:</p>
-    <p id="shareCompare">with basic year:<input type="radio" name="shareCompare" o="1" checked/> others:<input type="radio" name="shareCompare" o="2"/><input
+    <p style="font-weight: bold">share capital compare:</p>
+    <p id="shareCompare"><input type="radio" name="shareCompare" o="1" checked/>with basic year <input type="radio" name="shareCompare" o="2"/>others<input
             type="text" id="sharesBase"></p>
     <p>
         <button id="submit">submit</button>
@@ -32,7 +31,7 @@
 </div>
 <script>
     document.getElementById('submit').addEventListener("click", function () {
-        const symbol = document.getElementById("symbol").value,
+        const symbol = document.getElementById("symbol").value.toUpperCase(),
             basic_years = document.getElementById("basic_years").value,
             compare_years_input = document.getElementById("compare_years"),
             checked_balance_fields = document.getElementById("balanceFields").querySelectorAll('input[type=checkbox]:checked'),
